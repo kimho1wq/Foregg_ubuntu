@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>ForEgg - editor</title>
+
+		<!-- CSS -->
+		<link href="../public/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/css/product.css" rel="stylesheet">
+		<link href="../public/css/header.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include common/header.ejs %>
+		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
+			<div class="text-white">
+				<h2 class="display-4 font-weight-normal">전문가 매칭</h2>
+				<p class="lead font-weight-normal">
+					지금까지 <%=matchCompleted%>회의 매칭이 성사되었으며,<br>
+					<%=editorMatching%>명의 전문가가 매칭을 기다리고 있습니다.
+				</p>
+			</div>
+		</div>
+		<!--div class="row bg-light py-4 py-md-5 m-0 text-center text-muted">
+			<span class="col-md-8 mb-3 m-md-0">지금까지 성사된 매칭<br><h4 class="m-0"><%=matchCompleted%>회</h4></span>
+			<span class="col-md-8 mb-3 m-md-0">매칭을 기다리는 크리에이터<br><h4 class="m-0"><%=createrMatching%>명</h4></span>
+			<span class="col-md-8">매칭을 기다리는 전문가<br><h4 class="m-0"><%=editorMatching%>명</h4></span>
+		</div-->
+		<!-- Category : 전체, 뷰티, 먹방/요리, 여행, 영상, 리뷰, 게임, 공부, IRL, 음악(커버영상), 댄스, ASMR -->
+		<div class="container py-5">
+			<!--nav class="nav nav-fill nav-pills p-2 mb-3 border">
+				<li class="nav-item">
+					<a class="active nav-link rounded-0" href="#">단기 서비스</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link rounded-0" href="#">장기 서비스</a>
+				</li>
+			</nav-->
+			<div>
+				<!-- TODO: List here -->
+				<div class="list-group list-group-flush border-top">
+				<% for (var i = 0; i < matchData.length; i++) { %>
+					<a class="list-group-item list-group-item-action d-flex" href="/content?id=<%=matchData[i].match_id%>">               
+						<div class="col-18 p-0">
+							<h6 class="m-0"><span class="badge badge-primary mr-1">배지</span><%=matchData[i].match_title%></h6>
+							<small class="text-muted"><%=matchData[i].match_nickname%></small>
+						</div>
+						<div class="col-6 p-0 text-right">
+							<small class="text-muted"><%=matchData[i].match_create_date%></small>
+						</div>
+					</a>
+				<% } %>
+				</div>
+				<nav class="my-3" aria-label="Search results pages">
+					<ul class="pagination justify-content-center">
+					<% if (info.startPage==1) {%>
+						<li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+					<% } else { %>
+						<li class="page-item">
+							<a class="page-link" href="/editor?page=<%=(info.startPage - info.limitPage)%>">&laquo;</a>
+						</li>
+					<% } %>
+					<% for (var i = info.startPage; i <= info.endPage; i++) {%>
+						<% if (i == info.active) { %>
+							<li class="page-item active">
+								<a class="page-link" href="/editor?page=<%=i%>"><%=i%></a>
+							</li>
+						<% } else { %>
+							<li class="page-item">
+								<a class="page-link" href="/editor?page=<%=i%>"><%=i%></a>
+							</li>
+						<% } %>
+					<% } %>
+					<% if (info.endPage == info.pagination) { %>
+						<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+					<% } else { %>
+						<li class="page-item">
+							<a class="page-link" href="/editor?page=<%=(info.startPage - (-info.limitPage))%>">&raquo;</a>
+						</li>
+					<% } %>
+					</ul>
+				</nav>
+			</div>
+			<!-- TODO: Buttons here -->
+		</div>
+
+		<!-- Fixed Floating Button -->
+		<div class="p-0 pb-sm-3 p-md-3 text-right" style="position: fixed;bottom: 1rem;right: 1rem;z-index: 1000;">
+			<a href="/post" class="btn btn-primary mb-3 rounded-pill shadow-hoverable">글쓰기</a>
+			<div class="d-flex">
+				<input class="form-control rounded-pill shadow-hoverable">
+				<button class="btn btn-dark ml-2 rounded-pill shadow-hoverable text-nowrap">검색</button>
+			</div>
+		</div>
+
+		<% include common/footer.ejs %>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../public/js/bootstrap.bundle.min.js"></script>
+		<script src="../public/js/common.js"></script>
+	</body>
+</html>

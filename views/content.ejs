@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>ForEgg - content</title>
+
+		<!-- CSS -->
+		<link href="../public/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/css/product.css" rel="stylesheet">
+		<link href="../public/css/header.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include common/header.ejs %>
+		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
+			<div class="text-white">
+				<h2 class="display-4 font-weight-normal">편집자 연결 - 내용</h2>
+				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
+			</div>
+		</div>
+        <div><p>매칭은 어떻게 구현을 할까요~~</p></div>
+        <div>
+            <p>제목</p>
+            <p class="main-text"><strong> <%=matchData.match_title%></strong></p>
+		</div>
+        <div>
+            <p>닉네임</p>
+            <p class="main-text"><strong> <%=matchData.match_nickname%></strong></p>
+		</div>
+        <div>
+            <p>회원유형</p>
+            <p class="main-text"><strong>
+                <%var tmp = matchData.match_type%>
+                <%if(tmp == 1) {%>
+                    <p class="main-text"><strong> 영상편집자</strong></p>
+                <%} else if(tmp == 2) {%>
+                    <p class="main-text"><strong> 크리에이터</strong></p>
+                <%} else {%>
+                    <p class="main-text"><strong> 기타</strong></p>
+                <%}%>
+            </strong></p>
+		</div>
+		<div>
+            <p>내용</p>
+            <p class="main-text"><strong>
+                <%var lines = matchData.match_content.split("\n");%>
+                <%lines.forEach(function(item) {%>
+                    <%=item%><br/>
+                <%})%>
+            </strong></p>
+		</div>
+        
+		<% include common/footer.ejs %>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../public/js/bootstrap.bundle.min.js"></script>
+		<script src="../public/js/common.js"></script>
+
+	</body>
+</html>

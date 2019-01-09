@@ -1,0 +1,42 @@
+<script src="../public/js/jquery-3.3.1.min.js"></script>
+<nav id="header" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+	<a class="navbar-brand" href="/"><% include logo.ejs %></a>
+	<div class="border-0 dropdown navbar-toggler p-1">
+		<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<span class="navbar-toggler-icon"></span>
+		</a>
+		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" style="line-height: 1.5;">
+			<a class="dropdown-item" href="/editor?page=1">전문가 매칭</a>
+			<a class="dropdown-item" href="#">장비/장소</a>
+			<a class="dropdown-item" href="#">색다른 컨텐츠</a>
+			<a class="dropdown-item" href="#">포에그 소개</a>
+			<div class="dropdown-divider"></div>
+			<% if (login) { %>
+				<a class="dropdown-item" href="/users/logout">로그아웃</a>
+			<% } else { %>
+				<a class="dropdown-item" href="/users/login">로그인</a>
+			<% } %>
+		</div>
+	</div>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="/editor?page=1">전문가 매칭</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">장비/장소</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">색다른 컨텐츠</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">포에그 소개</a>
+			</li>
+		</ul>
+		<% if (login) { %>
+			<a href="/users/logout" class="btn btn-outline-light my-2 my-sm-0">로그아웃</a>
+		<% } else { %>
+			<a href="/users/login" class="btn btn-outline-light my-2 my-sm-0">로그인</a>
+		<% } %>
+	</div>
+</nav>

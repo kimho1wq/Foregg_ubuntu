@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>ForEgg - post</title>
+
+		<!-- CSS -->
+		<link href="../public/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/css/product.css" rel="stylesheet">
+		<link href="../public/css/header.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include common/header.ejs %>
+		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
+			<div class="text-white">
+				<h2 class="display-4 font-weight-normal">편집자 연결 - 글쓰기</h2>
+				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
+			</div>
+		</div>
+		<div class="container py-5">
+			<form action="/post" method="post" class="mw-42r mx-auto">
+				<!-- TODO: Add something here more -->
+				<div class="form-group row">
+					<label for="post_title" class="col-sm-5">제목</label>
+					<div class="col-sm-19">
+						<input type="text" class="form-control" name="post_title" id="post_title" placeholder="제목을 입력하세요" required>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="post_nickname" class="col-sm-5">별명</label>
+					<div class="col-sm-19">
+						<input type="text" class="form-control" name="post_nickname" id="post_nickname" placeholder="별명을 입력하세요" required>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-5">회원유형</label>
+					<div class="col-sm-19">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="post_type" id="post_type1" value="1" checked>
+							<label class="form-check-label" for="post_type1">영상편집자</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="post_type" id="post_type2" value="2">
+							<label class="form-check-label" for="post_type2">크리에이터</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="post_type" id="post_type3" value="3">
+							<label class="form-check-label" for="post_type3">기타</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-5">내용</label>
+					<div class="col-sm-19">
+						<textarea class="form-control" id="post_content" name="post_content" rows="12" placeholder="내용을 입력하세요"></textarea>
+					</div>
+				</div>
+				<hr class="my-4">
+				<button type="submit" class="btn btn-primary btn-block">발행</button>
+			</form>
+		</div>
+		<% include common/footer.ejs %>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../public/js/bootstrap.bundle.min.js"></script>
+		<script src="../public/js/common.js"></script>
+
+		<script>
+			$(window).bind('beforeunload', function() { return null; });
+			$(document).ready(function()
+			{
+				$("form").on("submit", function (e)
+				{
+					$(window).off("beforeunload");
+					return true;
+				});
+			});
+		</script>
+	</body>
+</html>
