@@ -1,3 +1,9 @@
+/*!
+ * Bootstrap v4.2.1 (https://getbootstrap.com/)
+ * Copyright 2011-2018 The Bootstrap Authors
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
 /* space */
 /* size */
 /* shadow */
@@ -21,18 +27,6 @@
   .shadow-hoverable-sm:hover, .shadow-hoverable-sm:focus {
     box-shadow: 0 0.35rem 0.75rem rgba(0, 0, 0, 0.175) !important; }
 
-.mw-20 {
-  max-width: 20% !important; }
-
-.mh-20 {
-  max-height: 20% !important; }
-
-.iw-20 {
-  min-width: 20% !important; }
-
-.ih-20 {
-  min-height: 20% !important; }
-
 .mw-25 {
   max-width: 25% !important; }
 
@@ -44,18 +38,6 @@
 
 .ih-25 {
   min-height: 25% !important; }
-
-.mw-40 {
-  max-width: 40% !important; }
-
-.mh-40 {
-  max-height: 40% !important; }
-
-.iw-40 {
-  min-width: 40% !important; }
-
-.ih-40 {
-  min-height: 40% !important; }
 
 .mw-50 {
   max-width: 50% !important; }
@@ -69,18 +51,6 @@
 .ih-50 {
   min-height: 50% !important; }
 
-.mw-60 {
-  max-width: 60% !important; }
-
-.mh-60 {
-  max-height: 60% !important; }
-
-.iw-60 {
-  min-width: 60% !important; }
-
-.ih-60 {
-  min-height: 60% !important; }
-
 .mw-75 {
   max-width: 75% !important; }
 
@@ -93,18 +63,6 @@
 .ih-75 {
   min-height: 75% !important; }
 
-.mw-80 {
-  max-width: 80% !important; }
-
-.mh-80 {
-  max-height: 80% !important; }
-
-.iw-80 {
-  min-width: 80% !important; }
-
-.ih-80 {
-  min-height: 80% !important; }
-
 .mw-100 {
   max-width: 100% !important; }
 
@@ -116,6 +74,66 @@
 
 .ih-100 {
   min-height: 100% !important; }
+
+.mw-auto {
+  max-width: auto !important; }
+
+.mh-auto {
+  max-height: auto !important; }
+
+.iw-auto {
+  min-width: auto !important; }
+
+.ih-auto {
+  min-height: auto !important; }
+
+.mw-20 {
+  max-width: 20% !important; }
+
+.mh-20 {
+  max-height: 20% !important; }
+
+.iw-20 {
+  min-width: 20% !important; }
+
+.ih-20 {
+  min-height: 20% !important; }
+
+.mw-40 {
+  max-width: 40% !important; }
+
+.mh-40 {
+  max-height: 40% !important; }
+
+.iw-40 {
+  min-width: 40% !important; }
+
+.ih-40 {
+  min-height: 40% !important; }
+
+.mw-60 {
+  max-width: 60% !important; }
+
+.mh-60 {
+  max-height: 60% !important; }
+
+.iw-60 {
+  min-width: 60% !important; }
+
+.ih-60 {
+  min-height: 60% !important; }
+
+.mw-80 {
+  max-width: 80% !important; }
+
+.mh-80 {
+  max-height: 80% !important; }
+
+.iw-80 {
+  min-width: 80% !important; }
+
+.ih-80 {
+  min-height: 80% !important; }
 
 .mw-1r {
   max-width: 1rem !important; }
@@ -201,6 +219,18 @@
 .ih-20r {
   min-height: 20rem !important; }
 
+.mw-24r {
+  max-width: 24rem !important; }
+
+.mh-24r {
+  max-height: 24rem !important; }
+
+.iw-24r {
+  min-width: 24rem !important; }
+
+.ih-24r {
+  min-height: 24rem !important; }
+
 .mw-37p5r {
   max-width: 37.5rem !important; }
 
@@ -225,27 +255,48 @@
 .ih-42r {
   min-height: 42rem !important; }
 
-.mw-auto {
-  max-width: auto !important; }
-
-.mh-auto {
-  max-height: auto !important; }
-
-.iw-auto {
-  min-width: auto !important; }
-
-.ih-auto {
-  min-height: auto !important; }
-
 .text-word-break {
   word-break: break-all; }
 
-/*!
- * Bootstrap v4.2.1 (https://getbootstrap.com/)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+.radio-tile-group {
+  display: flex;
+  flex-wrap: wrap; }
+  .radio-tile-group .input-container {
+    position: relative;
+    margin: 0.25rem; }
+    .radio-tile-group .input-container .radio-button {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      cursor: pointer; }
+    .radio-tile-group .input-container .radio-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ced4da;
+      border-radius: 50rem;
+      transition: border 0.2s ease, color 0.2s ease; }
+    .radio-tile-group .input-container .radio-tile-label {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ced4da;
+      padding: 0.4rem 0.8rem; }
+    .radio-tile-group .input-container .radio-button:checked + .radio-tile {
+      border: 1px solid #007bff;
+      color: #007bff; }
+      .radio-tile-group .input-container .radio-button:checked + .radio-tile .radio-tile-label {
+        color: #007bff; }
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -5976,6 +6027,9 @@ button.bg-dark:focus {
 .w-20r {
   width: 20rem !important; }
 
+.w-24r {
+  width: 24rem !important; }
+
 .w-37p5r {
   width: 37.5rem !important; }
 
@@ -6029,6 +6083,9 @@ button.bg-dark:focus {
 
 .h-20r {
   height: 20rem !important; }
+
+.h-24r {
+  height: 24rem !important; }
 
 .h-37p5r {
   height: 37.5rem !important; }

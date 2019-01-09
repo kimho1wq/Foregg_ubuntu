@@ -7,9 +7,9 @@
 		<title>ForEgg</title>
 
 		<!-- CSS -->
-		<link href="public/css/bootstrap.min.css" rel="stylesheet">
-		<link href="public/css/product.css" rel="stylesheet">
-		<link href="public/css/header.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/product.css" rel="stylesheet">
+		<link href="css/header.css" rel="stylesheet">
 	</head>
 	<body>
 		<% include common/header.ejs %>
@@ -36,7 +36,7 @@
 								<span class="ml-auto">2018-12-17</span>
 							</div>
 						</div>
-						<img class="my-card-image" src="public/img/profile5.jpg">
+						<img class="my-card-image" src="img/profile5.jpg">
 					</div>
 				</div>
 				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
@@ -49,7 +49,7 @@
 								<span class="ml-auto">2018-12-16</span>
 							</div>
 						</div>
-						<img class="my-card-image" src="public/img/profile6.jpg">
+						<img class="my-card-image" src="img/profile6.jpg">
 					</div>
 				</div>
 				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
@@ -62,7 +62,7 @@
 								<span class="ml-auto">2018-12-12</span>
 							</div>
 						</div>
-						<img class="my-card-image" src="public/img/profile7.jpg">
+						<img class="my-card-image" src="img/profile7.jpg">
 					</div>
 				</div>
 				<% for (var i = 0; i < matchData.length - 3; i++) { %>
@@ -76,7 +76,7 @@
 								<span class="ml-auto"><%=matchData[i].match_create_date%></span>
 							</div>
 						</div>
-						<img class="my-card-image" src="public/img/profile<%=i+5%>.jpg">
+						<img class="my-card-image" src="img/profile<%=i+5%>.jpg">
 					</div>
 				</div>
 				<% } %>
@@ -87,7 +87,7 @@
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="public/js/bootstrap.bundle.min.js"></script>
-		<script src="public/js/common.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/common.js"></script>
 	</body>
 </html>

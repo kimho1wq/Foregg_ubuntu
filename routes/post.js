@@ -4,8 +4,9 @@ var async = require('async');
 
 router.get('/',function(req, res, next) {
     console.log('/post get pass request.');
+    var tags = ["전체", "뷰티", "먹방/요리", "여행", "영상", "리뷰", "게임", "공부", "IRL", "음악(커버영상)", "댄스", "ASMR", "액티비티", "Vlog"];
     if(req.session.user) {
-        res.render('post', { login : req.session.user});
+        res.render('post', { login : req.session.user, tags : tags });
     } else {
         res.send('<script type="text/javascript">alert(" 로그인을 해야합니다. ");window.location.href = "/users/login";</script>');
     }

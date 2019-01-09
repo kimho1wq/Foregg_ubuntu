@@ -7,21 +7,35 @@
 		<title>ForEgg - post</title>
 
 		<!-- CSS -->
-		<link href="../public/css/bootstrap.min.css" rel="stylesheet">
-		<link href="../public/css/product.css" rel="stylesheet">
-		<link href="../public/css/header.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/product.css" rel="stylesheet">
+		<link href="css/header.css" rel="stylesheet">
 	</head>
 	<body>
 		<% include common/header.ejs %>
 		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
 			<div class="text-white">
-				<h2 class="display-4 font-weight-normal">편집자 연결 - 글쓰기</h2>
+				<h2 class="display-4 font-weight-normal">편집자 매칭 - 글쓰기</h2>
 				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
 			</div>
 		</div>
 		<div class="container py-5">
 			<form action="/post" method="post" class="mw-42r mx-auto">
 				<!-- TODO: Add something here more -->
+				<div class="form-group row">
+					<label for="post_tag" class="col-sm-5">분류</label>
+					<div class="col-sm-19">
+						<div class="radio-tile-group">
+							<% for (var i = 0; i < tags.length; i++) { %>
+							<div class="input-container">
+								<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="radio" value="<%=i%>" <% if (i == 0) { %> checked <% } %> >
+								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i]%></label>
+							</div>
+							<% } %>
+						</div>
+					</div>
+				</div>
+				
 				<div class="form-group row">
 					<label for="post_title" class="col-sm-5">제목</label>
 					<div class="col-sm-19">
@@ -34,7 +48,7 @@
 						<input type="text" class="form-control" name="post_nickname" id="post_nickname" placeholder="별명을 입력하세요" required>
 					</div>
 				</div>
-				<div class="form-group row">
+				<!--div class="form-group row">
 					<label class="col-sm-5">회원유형</label>
 					<div class="col-sm-19">
 						<div class="form-check">
@@ -50,7 +64,7 @@
 							<label class="form-check-label" for="post_type3">기타</label>
 						</div>
 					</div>
-				</div>
+				</div-->
 				<div class="form-group row">
 					<label class="col-sm-5">내용</label>
 					<div class="col-sm-19">
@@ -66,8 +80,8 @@
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="../public/js/bootstrap.bundle.min.js"></script>
-		<script src="../public/js/common.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/common.js"></script>
 
 		<script>
 			$(window).bind('beforeunload', function() { return null; });
