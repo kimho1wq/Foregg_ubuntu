@@ -10,11 +10,11 @@ var storage = multer.diskStorage({
         //파일이 이미지 파일이면
         if (file.mimetype == "image/jpeg" || file.mimetype == "image/jpg" || file.mimetype == "image/png") {
             console.log("이미지 파일이네요");
-            cb(null,'images');
+            cb(null,'uploads/images');
             //텍스트 파일이면
         } else if (file.mimetype == "application/pdf" || file.mimetype == "application/txt" || file.mimetype == "application/octet-stream") {
             console.log("텍스트 파일이네요");
-            cb(null,__dirname +'/../'+'uploads/texts');
+            cb(null,'uploads/texts');
         }
     },
     //파일이름 설정
