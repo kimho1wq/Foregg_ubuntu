@@ -1,1 +1,1 @@
-# Foreeg_ubuntu
+# Foregg_ubuntu
