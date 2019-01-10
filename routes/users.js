@@ -33,7 +33,8 @@ router.get('/join', function (req, res) {
 });
 
 
-router.post('/join', upload.single('join_picture'), function (req, res) {
+router.post('/join', function (req, res) {
+    upload.single('join_picture');
     console.log('join 들어옴');
     if (req.body) {
         var picture = req.file.path;
@@ -115,7 +116,7 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
             ],
             function (callback, resultJson) {
                 if(resultJson.result){
-		console.log("거의다 완료");
+		
                     res.send('<script type="text/javascript">alert("회원가입 완료");window.location.href = "/users/login";</script>');
 		}
                 else
@@ -168,7 +169,7 @@ router.post('/login', function (req, res) {
 
     if(sess.user) 
         res.send('<script type="text/javascript">alert("이미 로그인 되어 있습니다.");window.location.href = "/";</script>');
-	console.log(sess.user);
+	
     
     async.waterfall([
 		function (callback) {
@@ -182,8 +183,8 @@ router.post('/login', function (req, res) {
                     if (user) {
                         firebaseDB.collection("users").doc(user.uid).get().then((doc) => {
                             if (doc.exists) {
-				    console.log('doc exists'+doc.data().uid);
-				    var tmp = doc.data();
+				    
+				    
                                 sess.user = {
                                     uid: user.uid,
                                     picture: doc.data().picture,
@@ -192,18 +193,18 @@ router.post('/login', function (req, res) {
                                     type: doc.data().type,
                                     phone: doc.data().phone
                                 };
-                    callback(null, resultJson);
+                                callback(null, resultJson);
                             } else {
                                 // doc.data() will be undefined in this case
                                 resultJson.result = false;
                                 resultJson.message = 'No such document!';
-                    callback(null, resultJson);
+                                callback(null, resultJson);
                             }
                         });    
                     } else {
                         resultJson.result = false;
                         resultJson.message = '서버로부터 유저 정보를 받아오지 못하였습니다.';
-                    callback(null, resultJson);
+                        callback(null, resultJson);
                     }
                 });
             }).catch(function (error) {
@@ -226,10 +227,6 @@ router.post('/login', function (req, res) {
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-		console.log('last sess.user: '+sess.user);
-		console.log('last sess.user.uid: '+sess.user.uid);
-		console.log('last sess.user.picture: '+sess.user.picture);
-		console.log('last sess.: '+sess.user.email);
             res.send('<script type="text/javascript">alert("로그인되었습니다.");window.location.href = "/";</script>');
         } else {
             res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/users/login";</script>');
