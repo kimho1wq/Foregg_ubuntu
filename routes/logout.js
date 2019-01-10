@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
-router.get('/logout', function (req, res) {
+router.get('/', function (req, res) {
     console.log('/logout post 패스 요청됨.');
     if(req.session.user) {
         console.log('로그아웃합니다.');

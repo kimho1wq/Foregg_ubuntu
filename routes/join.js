@@ -27,13 +27,13 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 
-router.get('/join', function (req, res) {
+router.get('/', function (req, res) {
     console.log('/join get pass request.');
     res.render('join', { login : req.session.user } );
 });
 
 
-router.post('/join', upload.single('join_picture'), function (req, res) {
+router.post('/', upload.single('join_picture'), function (req, res) {
     console.log('join 들어옴');
     
     var picture = req.file.path;
@@ -86,7 +86,7 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
                     if(!user.emailVerified){
 						user.sendEmailVerification().then(function() {
                             console.log("인증메일 보냄");
-                            res.send('<script type="text/javascript">alert("회원가입 완료 (가입시 등록한 이메일 인증후 로그인하시기 바랍니다)");window.location.href = "/users/login";</script>');
+                            res.send('<script type="text/javascript">alert("회원가입 완료 (가입시 등록한 이메일 인증후 로그인하시기 바랍니다)");window.location.href = "/login";</script>');
                         }).catch(function(error) {
                             console.log(error.message);
                         });
@@ -133,11 +133,11 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
             if(values.result)
                 res.send('<script type="text/javascript">alert("회원가입 완료");window.location.href = "/users/login";</script>');
             else
-                res.send('<script type="text/javascript">alert("회원가입 오류 발생 - 다시 시도해주시기 바랍니다.");window.location.href = "/users/join";</script>');
+                res.send('<script type="text/javascript">alert("회원가입 오류 발생 - 다시 시도해주시기 바랍니다.");window.location.href = "/join";</script>');
         });
     }
     else {
-        res.send('<script type="text/javascript">alert("비밀번호는 숫자와 문자를 섞어 6자리 이상으로 만들어 주시기 바랍니다.");window.location.href = "/users/join";</script>');
+        res.send('<script type="text/javascript">alert("비밀번호는 숫자와 문자를 섞어 6자리 이상으로 만들어 주시기 바랍니다.");window.location.href = "/join";</script>');
     }*/
 });
 

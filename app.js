@@ -38,7 +38,7 @@ app.use(session({
 app.use('/', index);
 app.use('/login', login);
 app.use('/join', join);
-app.use('/logout', users);
+app.use('/logout', logout);
 app.use('/admin', admin);
 app.use('/editor', editor);
 app.use('/post', post);

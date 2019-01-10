@@ -3,12 +3,12 @@ var router = express.Router();
 var async = require('async');
 
 
-router.get('/login', function (req, res) {
+router.get('/', function (req, res) {
     console.log('/login get pass request.');
     res.render('login', { login : req.session.user } );
 });
 
-router.post('/login', function (req, res) {
+router.post('/', function (req, res) {
     var sess = req.session;
     var email = req.body.signInEmail;
     var password = req.body.signInPassword;
@@ -52,7 +52,7 @@ router.post('/login', function (req, res) {
             res.redirect('/');
                     
         } else {
-            res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/users/login";</script>');
+            res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/login";</script>');
         }
     });
 });
