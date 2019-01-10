@@ -23,6 +23,7 @@
     "async": "^2.6.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "firebase": "^5.7.2",
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "http-errors": "^1.7.1",

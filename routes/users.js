@@ -48,7 +48,7 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
     var phone = req.body.join_phone;
     //var type = req.body.type;
     
-    console.log(email,password,username,phone,type);
+    console.log(email,password,username,phone);
     
     firebaseAuth.createUserWithEmailAndPassword(email, password).then(function() {
         firebaseAuth.signInWithEmailAndPassword(email, password).then(function() {

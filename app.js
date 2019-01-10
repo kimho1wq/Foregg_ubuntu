@@ -15,6 +15,7 @@ var post = require('./routes/post');
 var content = require('./routes/content');
 
 require('./lib/mysql_init');
+require('./lib/firebase_init');
 var app = express();
 
 // view engine setup
