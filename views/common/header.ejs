@@ -1,4 +1,4 @@
-<script src="../public/js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
 <nav id="header" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
 	<a class="navbar-brand" href="/"><% include logo.ejs %></a>
 	<div class="border-0 dropdown navbar-toggler p-1">
@@ -11,6 +11,7 @@
 			<a class="dropdown-item" href="#">색다른 컨텐츠</a>
 			<a class="dropdown-item" href="#">포에그 소개</a>
 			<div class="dropdown-divider"></div>
+            <img class="dropdown-item" width="110" height="150" src="img/profile5.jpg">
 			<% if (login) { %>
 				<a class="dropdown-item" href="/users/logout">로그아웃</a>
 			<% } else { %>
