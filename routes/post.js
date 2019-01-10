@@ -8,7 +8,7 @@ router.get('/',function(req, res, next) {
     if(req.session.user) {
         res.render('post', { login : req.session.user, tags : tags });
     } else {
-        res.send('<script type="text/javascript">alert(" 로그인을 해야합니다. ");window.location.href = "/users/login";</script>');
+        res.send('<script type="text/javascript">alert(" 로그인을 해야합니다. ");window.location.href = "/login";</script>');
     }
 
 });
@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
    
     
     if(!req.session.user) {
-        res.send('<script type="text/javascript">alert("로그인하셔야 합니다.");window.location.href = "/users/login";</script>');
+        res.send('<script type="text/javascript">alert("로그인하셔야 합니다.");window.location.href = "/login";</script>');
         return;
     }
     
