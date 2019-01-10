@@ -46,11 +46,66 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
     var nickname = req.body.join_nickname;
     var username = req.body.join_name;
     var phone = req.body.join_phone;
-    var type = req.body.type;
+    //var type = req.body.type;
     
     console.log(email,password,username,phone,type);
     
-    if(validateJoinValue(email, password, username, phone, type)) {
+    firebaseAuth.createUserWithEmailAndPassword(email, password).then(function() {
+        firebaseAuth.signInWithEmailAndPassword(email, password).then(function() {
+            console.log("로그인 성공");
+            firebaseAuth.onAuthStateChanged(function(user) {
+                if (user) {
+	            // user 정보 추가
+                    firebaseDB.collection("users").doc(user.uid).set({
+                        uid : user.uid,
+                        name: username,
+                        email: email,
+                        nickname: nickname,
+                        phone: phone
+				    }).then(function() {
+                        console.log("Document successfully written!");
+                    }).catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
+
+                    /*pool.getConnection(function(err, conn) {
+                        if(err) {
+                            if(conn) conn.release();
+                            return;
+                        }
+                        console.log('데이터베이스 연결 스레드 아이디 : ' + conn.threadId);
+
+                        var data = {uid:user.uid, name:name, email:email, university:university, major:major, nickname:nickname, year:year};
+
+                        var exec = conn.query('insert into users set ?', data, function(err, result) {
+                            conn.release();
+                            if(err) {
+                                console.log('sql 실행 시 오류 발생');
+                                console.dir(err);
+                                return;
+                            }
+                        })
+                    })*/
+
+                    if(!user.emailVerified){
+						user.sendEmailVerification().then(function() {
+                            console.log("인증메일 보냄");
+                            res.send('<script type="text/javascript">alert("회원가입 완료 (가입시 등록한 이메일 인증후 로그인하시기 바랍니다)");window.location.href = "/users/login";</script>');
+                        }).catch(function(error) {
+                            console.log(error.message);
+                        });
+                    }
+                }
+            });
+        }).catch(function(error) {
+            // Handle Errors here.
+		console.log(error);
+        });
+    }).catch(function(e) {
+        return;
+    });
+    
+    /*if(validateJoinValue(email, password, username, phone, type)) {
         
         async.waterfall([    
             function (callback) {
@@ -87,7 +142,7 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
     }
     else {
         res.send('<script type="text/javascript">alert("비밀번호는 숫자와 문자를 섞어 6자리 이상으로 만들어 주시기 바랍니다.");window.location.href = "/users/join";</script>');
-    }
+    }*/
 });
 
 function validateJoinValue(email, password, username, phone, type) {
@@ -119,7 +174,7 @@ router.post('/login', function (req, res) {
     var email = req.body.signInEmail;
     var password = req.body.signInPassword;
 
-    async.waterfall([
+    /*async.waterfall([
 		function (callback) {             
             var resultJson = {
                 verified: false,
@@ -160,7 +215,7 @@ router.post('/login', function (req, res) {
         } else {
             res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/users/login";</script>');
         }
-    });
+    });*/
 });
 
 router.get('/logout', function (req, res) {
