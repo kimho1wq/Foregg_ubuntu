@@ -8,7 +8,9 @@ var mysql = require('mysql');
 
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var login = require('./routes/login');
+var logout = require('./routes/logout');
+var join = require('./routes/join');
 var admin = require('./routes/admin');
 var editor = require('./routes/editor');
 var post = require('./routes/post');
@@ -34,7 +36,9 @@ app.use(session({
 }));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/login', login);
+app.use('/join', join);
+app.use('/logout', users);
 app.use('/admin', admin);
 app.use('/editor', editor);
 app.use('/post', post);

@@ -32,10 +32,6 @@ router.get('/join', function (req, res) {
     res.render('join', { login : req.session.user } );
 });
 
-router.get('/login', function (req, res) {
-    console.log('/login get pass request.');
-    res.render('login', { login : req.session.user } );
-});
 
 router.post('/join', upload.single('join_picture'), function (req, res) {
     console.log('join 들어옴');
@@ -169,67 +165,8 @@ function validateJoinValue(email, password, username, phone, type) {
     return true;
 }
 
-router.post('/login', function (req, res) {
-    var sess = req.session;
-    var email = req.body.signInEmail;
-    var password = req.body.signInPassword;
 
-    /*async.waterfall([
-		function (callback) {             
-            var resultJson = {
-                verified: false,
-                message: ''
-            };
-            
-            var data = [email, password];
-            pool.query('SELECT * FROM users where user_email=? AND user_password=HEX(AES_ENCRYPT(?,"fuosreergsg"))', data, (err, rows) => {
-                if (err) {
-                    console.log(err);
-                    resultJson.message = 'query error';
-                    callback(null, resultJson);
-                } else {
-                    if (rows.length > 0) { //database에 user정보가 존재 할 경우.
-                        resultJson.userInfo = rows[0];
-                        resultJson.verified = true;
-                    }
-                    else {
-                        resultJson.message = 'email 또는 password 가 틀렸습니다.';  
-                    }
-                    callback(null, resultJson);
-                }
-            });  
-        }
-    ],  
-    function (callback, resultJson) {
-        if(resultJson.verified) {
-            sess.user = {
-                email: resultJson.userInfo.user_email,
-                name: resultJson.userInfo.user_name,
-                type: resultJson.userInfo.user_type,
-                phone: resultJson.userInfo.user_phone,
-                authorized: false
-            }
-                
-            res.redirect('/');
-                    
-        } else {
-            res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/users/login";</script>');
-        }
-    });*/
-});
 
-router.get('/logout', function (req, res) {
-    console.log('/logout post 패스 요청됨.');
-    if(req.session.user) {
-        console.log('로그아웃합니다.');
-        req.session.destroy(function(err) {
-            if(err) {throw err;}
-            res.send('<script type="text/javascript">alert("로그아웃 되었습니다.");window.location.href = "/";</script>');
-        });
-    } else {
-        res.send('<script type="text/javascript">alert("로그인이 되어있지 않습니다.");window.location.href = "/";</script>');
-    }
-});
 
 
 module.exports = router;

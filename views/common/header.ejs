@@ -12,9 +12,9 @@
 			<a class="dropdown-item" href="#">포에그 소개</a>
 			<div class="dropdown-divider"></div>
 			<% if (login) { %>
-				<a class="dropdown-item" href="/users/logout">로그아웃</a>
+				<a class="dropdown-item" href="/logout">로그아웃</a>
 			<% } else { %>
-				<a class="dropdown-item" href="/users/login">로그인</a>
+				<a class="dropdown-item" href="/login">로그인</a>
 			<% } %>
 		</div>
 	</div>
@@ -35,9 +35,9 @@
 		</ul>
 			<a href="#" class="btn btn-outline-light my-2 my-sm-0" style="width:50px; height:50px; background:no-repeat center center;position:relative;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;background-image: url('img/profile_test.png');"></a>
 		<% if (login) { %>
-			<a href="/users/logout" class="btn btn-outline-light my-2 my-sm-0">로그아웃</a>
+			<a href="/logout" class="btn btn-outline-light my-2 my-sm-0">로그아웃</a>
 		<% } else { %>
-			<a href="/users/login" class="btn btn-outline-light my-2 my-sm-0">로그인</a>
+			<a href="/login" class="btn btn-outline-light my-2 my-sm-0">로그인</a>
 		<% } %>
 	</div>
 </nav>
