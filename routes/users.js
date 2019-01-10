@@ -33,8 +33,7 @@ router.get('/join', function (req, res) {
 });
 
 
-router.post('/join', function (req, res) {
-    upload.single('join_picture');
+router.post('/join', upload.single('join_picture'), function (req, res) {
     console.log('join 들어옴');
     if (req.body) {
         var picture = req.file.path;
