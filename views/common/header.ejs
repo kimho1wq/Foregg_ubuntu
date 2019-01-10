@@ -11,7 +11,6 @@
 			<a class="dropdown-item" href="#">색다른 컨텐츠</a>
 			<a class="dropdown-item" href="#">포에그 소개</a>
 			<div class="dropdown-divider"></div>
-            <img class="dropdown-item" width="110" height="150" src="img/profile5.jpg">
 			<% if (login) { %>
 				<a class="dropdown-item" href="/users/logout">로그아웃</a>
 			<% } else { %>
@@ -34,6 +33,7 @@
 				<a class="nav-link" href="#">포에그 소개</a>
 			</li>
 		</ul>
+			<a href="#" class="btn btn-outline-light my-2 my-sm-0" style="width:50px; height:50px; background:no-repeat center center;position:relative;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;background-image: url('img/profile_test.png');"></a>
 		<% if (login) { %>
 			<a href="/users/logout" class="btn btn-outline-light my-2 my-sm-0">로그아웃</a>
 		<% } else { %>
