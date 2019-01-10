@@ -33,11 +33,15 @@
 				<a class="nav-link" href="#">포에그 소개</a>
 			</li>
 		</ul>
-			<a href="#" class="btn btn-outline-light my-2 my-sm-0" style="width:50px; height:50px; background:no-repeat center center;position:relative;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;background-image: url('img/profile_test.png');"></a>
+		<div class="d-flex">
+			<div class="mx-2 my-auto">
+				<img src="img/profile_test.png" class="h-2r rounded-pill w-auto">
+			</div>
 		<% if (login) { %>
 			<a href="/logout" class="btn btn-outline-light my-2 my-sm-0">로그아웃</a>
 		<% } else { %>
 			<a href="/login" class="btn btn-outline-light my-2 my-sm-0">로그인</a>
 		<% } %>
+		</div>
 	</div>
 </nav>
