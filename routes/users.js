@@ -88,7 +88,7 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
                             resultJson.message = error.message;
                             callback(null, resultJson);
                         });
-                    }).catch(function(eroor) {
+                    }).catch(function(error) {
                         console.log(error);
                         resultJson.result = false;
                         resultJson.message = error.message;
@@ -97,8 +97,8 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
                 },
                 function (resultJson, callback) {
                     if (resultJson.result && resultJson.uid) {
-                        var data = [resultJson.uid, pasword];
-                        pool.query("INSERT INTO users(users_uid, users_password) VALUES (?,HEX(AES_ENCRYPT(?,'fuosreergsg')))", data, (err, rows) => {
+                        var data = [resultJson.uid, password];
+                        pool.query("INSERT INTO users(user_uid, user_password) VALUES (?,HEX(AES_ENCRYPT(?,'fuosreergsg')))", data, (err, rows) => {
                             if (err) {
                                 console.log(err);
                                 resultJson.result = false;
@@ -114,8 +114,10 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
                 }
             ],
             function (callback, resultJson) {
-                if(resultJson.result)
+                if(resultJson.result){
+		console.log("거의다 완료");
                     res.send('<script type="text/javascript">alert("회원가입 완료");window.location.href = "/users/login";</script>');
+		}
                 else
                     res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');   
             });
@@ -159,17 +161,19 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
+    console.log('/login post request.');
     var sess = req.session;
     var email = req.body.signInEmail;
     var password = req.body.signInPassword;
 
     if(sess.user) 
         res.send('<script type="text/javascript">alert("이미 로그인 되어 있습니다.");window.location.href = "/";</script>');
+	console.log(sess.user);
     
     async.waterfall([
 		function (callback) {
             var resultJson = {
-                result: false,
+                result: true,
                 message: ''
             };
             
@@ -178,25 +182,29 @@ router.post('/login', function (req, res) {
                     if (user) {
                         firebaseDB.collection("users").doc(user.uid).get().then((doc) => {
                             if (doc.exists) {
+				    console.log('doc exists'+doc.data().uid);
+				    var tmp = doc.data();
                                 sess.user = {
-                                    uid: doc.data().uid,
+                                    uid: user.uid,
                                     picture: doc.data().picture,
                                     email: doc.data().email,
                                     nickname: doc.data().nickname,
                                     type: doc.data().type,
                                     phone: doc.data().phone
-                                }
+                                };
+                    callback(null, resultJson);
                             } else {
                                 // doc.data() will be undefined in this case
                                 resultJson.result = false;
                                 resultJson.message = 'No such document!';
+                    callback(null, resultJson);
                             }
                         });    
                     } else {
                         resultJson.result = false;
                         resultJson.message = '서버로부터 유저 정보를 받아오지 못하였습니다.';
-                    }
                     callback(null, resultJson);
+                    }
                 });
             }).catch(function (error) {
                 resultJson.result = false;
@@ -218,7 +226,11 @@ router.post('/login', function (req, res) {
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-            res.redirect('/');
+		console.log('last sess.user: '+sess.user);
+		console.log('last sess.user.uid: '+sess.user.uid);
+		console.log('last sess.user.picture: '+sess.user.picture);
+		console.log('last sess.: '+sess.user.email);
+            res.send('<script type="text/javascript">alert("로그인되었습니다.");window.location.href = "/";</script>');
         } else {
             res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/users/login";</script>');
         }
