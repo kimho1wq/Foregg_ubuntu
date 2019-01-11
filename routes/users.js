@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
     },
     //파일이름 설정
     filename: function (req, file, cb) {
-        cb(null, req.session.user.uid + "-" + Date.now());
+        cb(null, Date.now() + "-" + file.originalname);
     }
 });
 
