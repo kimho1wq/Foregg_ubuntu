@@ -97,8 +97,8 @@ router.post('/join', function (req, res) {
                 },
                 function (resultJson, callback) {
                     if (resultJson.result && resultJson.uid) {
-                        var data = [resultJson.uid, password];
-                        pool.query("INSERT INTO users(user_uid, user_password) VALUES (?,HEX(AES_ENCRYPT(?,'fuosreergsg')))", data, (err, rows) => {
+                        var data = [resultJson.uid, email, nickname, phone, type];
+                        pool.query("INSERT INTO users(user_uid, user_email, user_nickname, user_phone, user_type) VALUES (?,?,?,?,?)", data, (err, rows) => {
                             if (err) {
                                 console.log(err);
                                 resultJson.result = false;
@@ -115,11 +115,10 @@ router.post('/join', function (req, res) {
             ],
             function (callback, resultJson) {
                 if(resultJson.result){
-		
                     res.send('<script type="text/javascript">alert("회원가입 완료");window.location.href = "/users/login";</script>');
-		}
-                else
-                    res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');   
+                } else {
+                    res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');  
+                }
             });
         } else {
             res.send('<script type="text/javascript">alert("불완전한 요청입니다. 다시 시도해주세요.");window.location.href = "/users/join";</script>');
@@ -181,17 +180,9 @@ router.post('/login', function (req, res) {
                 firebaseAuth.onAuthStateChanged(function (user) {
                     if (user) {
                         firebaseDB.collection("users").doc(user.uid).get().then((doc) => {
+                            resultJson.uid = user.uid;
                             if (doc.exists) {
-				    
-				    
-                                sess.user = {
-                                    uid: user.uid,
-                                    picture: doc.data().picture,
-                                    email: doc.data().email,
-                                    nickname: doc.data().nickname,
-                                    type: doc.data().type,
-                                    phone: doc.data().phone
-                                };
+                                console.log("firebaseLogin Access");
                                 callback(null, resultJson);
                             } else {
                                 // doc.data() will be undefined in this case
@@ -222,6 +213,31 @@ router.post('/login', function (req, res) {
                 }
                 callback(null, resultJson);
             });
+		},
+        function (resultJson, callback) {
+            if (resultJson.result && resultJson.uid) {
+                var data = [resultJson.uid];
+                pool.query("SELECT * FROM users WHERE user_uid=?", data, (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = '회원 정보 검색 오류';
+                        callback(null, resultJson);
+                    } else {
+                        sess.user = {
+                            uid: rows[0].uid,
+                            picture: rows[0].picture,
+                            email: rows[0].email,
+                            nickname: rows[0].nickname,
+                            type: rows[0].type,
+                            phone: rows[0].phone
+                        };
+                        callback(null, resultJson);
+                    }
+                })
+            }
+            else
+                callback(null, resultJson);
 		}
 	],
     function (callback, resultJson) {
