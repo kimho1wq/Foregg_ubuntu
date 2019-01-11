@@ -36,7 +36,7 @@
 		<div class="d-flex">
 			<div class="mx-2 my-auto">
                 <% if (login && login.picture) { %>     
-                    <a href="/users/info"><img src="../<%=login.picture%>" class="h-2r rounded-pill w-auto"></a>
+                    <a href="/users/info"><img src="<%=login.picture%>" class="h-2r rounded-pill w-auto"></a>
                 <% } else if(login) { %>
                     <a href="/users/info"><img src="img/basic_profile.png" class="h-2r rounded-pill w-auto"></a>
                 <% } %>		

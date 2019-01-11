@@ -9,12 +9,9 @@ var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //파일이 이미지 파일이면
         if (file.mimetype == "image/jpeg" || file.mimetype == "image/jpg" || file.mimetype == "image/png") {
-            console.log("이미지 파일이네요");
-            cb(null,'uploads/images');
+            console.log("이미지파일");
+            cb(null,'public/img/profile');
             //텍스트 파일이면
-        } else if (file.mimetype == "application/pdf" || file.mimetype == "application/txt" || file.mimetype == "application/octet-stream") {
-            console.log("텍스트 파일이네요");
-            cb(null,'uploads/texts');
         }
     },
     //파일이름 설정
@@ -216,6 +213,7 @@ router.post('/login', function (req, res) {
         function (resultJson, callback) {
             if (resultJson.result && resultJson.uid) {
                 var data = [resultJson.uid];
+		    console.log('login result uid:'+resultJson.uid);
                 pool.query("SELECT * FROM users WHERE user_uid=?", data, (err, rows) => {
                     if (err) {
                         console.log(err);
@@ -223,14 +221,18 @@ router.post('/login', function (req, res) {
                         resultJson.message = '회원 정보 검색 오류';
                         callback(null, resultJson);
                     } else {
+			    console.log('row의 값'+rows[0]);
+			    console.log('row의 값이 들어올까여'+rows[0].user_uid);
                         sess.user = {
-                            uid: rows[0].uid,
-                            picture: rows[0].picture,
-                            email: rows[0].email,
-                            nickname: rows[0].nickname,
-                            type: rows[0].type,
-                            phone: rows[0].phone
+                            uid: rows[0].user_uid,
+                            picture: rows[0].user_picture,
+                            email: rows[0].user_email,
+                            nickname: rows[0].user_nickname,
+                            type: rows[0].user_type,
+                            phone: rows[0].user_phone
                         };
+			console.log('login sess uid: '+sess.user.uid);
+			console.log('login sess email: '+sess.user.email);
                         callback(null, resultJson);
                     }
                 })
@@ -270,8 +272,10 @@ router.get('/info', function (req, res) {
 
 router.post('/info', upload.single('profile_picture'), function (req, res) {
     console.log('/info post pass request.');
-    var sess = req.session;
-    var picture = req.file.path;
+    var sess = req.session.user;
+	console.log('/info in sess uid:'+sess.uid);
+    var str = req.file.path;
+    var picture = str.substring(7,str.length);
     console.log(picture); 
    
     async.waterfall([    
@@ -281,15 +285,17 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
                 message : ''
             };
                     
-            var data = [picture, sess.user.uid];
-            pool.query("INSERT INTO users(user_picture) VALUES (?) WHERE user_uid = ?", data, (err, rows) => {
+            var data = [picture, sess.uid];
+		console.log(data);
+            pool.query("UPDATE users SET user_picture=? WHERE user_uid=?", data, (err, rows) => {
                 if (err) {
                     console.log(err);
                     resultJson.result = false;
                     resultJson.message = '회원 정보 삽입 오류';
                     callback(null, resultJson);
                 } else {
-                    sess.user.picture = picture;
+                    sess.picture = picture;
+			console.log('sess-picture: '+picture);
                     callback(null, resultJson);
                 }
             });
