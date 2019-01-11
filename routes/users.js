@@ -257,7 +257,8 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
     console.log('/info post pass request.');
     var sess = req.session;
     var picture = req.file.path;
-        
+    console.log(picture);
+    
     async.waterfall([    
         function (callback) {
             var resultJson = {
@@ -265,10 +266,12 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
                 message : ''
             };
           
-            firebaseDB.collection("users").doc(sess.user.uid+'/picture').set(picture).then(function() {
+            firebaseDB.collection("users").doc(sess.user.uid+'/picture').set(picture)
+                .then(function() {
                 console.log("success");
                 callback(null, resultJson);
             }).catch(function(error) {
+                console.log("자꾸여기서오류나ㅠㅠ");
                 console.log(error);
                 resultJson.result = false;
                 resultJson.message = error.message;
@@ -289,6 +292,7 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
         }
     ],
     function (callback, resultJson) {
+        console.log("마지막까지..ㅠ");
         if(resultJson.result){
             res.send('<script type="text/javascript">alert("정보 수정 완료");window.location.href = "/users/info";</script>');
 		} else {
