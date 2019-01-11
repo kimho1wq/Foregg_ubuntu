@@ -253,12 +253,10 @@ router.get('/info', function (req, res) {
     res.render('info', { login : req.session.user } );
 });
 
-
 router.post('/info', upload.single('join_picture'), function (req, res) {
     console.log('/info post pass request.');
     var sess = req.session;
     var picture = req.file.path;
-        
         
     async.waterfall([    
         function (callback) {
@@ -266,9 +264,12 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
                 result : true,
                 message : ''
             };
+          
+            // Get a key for a new Post.
+            //var newPostKey = firebaseDB.ref().child(sess.user.uid).push().key;
             
-            firebaseDB.collection("users").doc(sess.user.uid).set({
-                picture: picture
+            firebaseDB.ref("users/"+sess.user.uid).update({
+                picture: picture 
             }).then(function() {
                 console.log("success");
                 callback(null, resultJson);
@@ -277,15 +278,14 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
                 resultJson.result = false;
                 resultJson.message = error.message;
                 callback(null, resultJson);
-            });            
-        
+            });               
         }
     ],
     function (callback, resultJson) {
         if(resultJson.result){
-            res.send('<script type="text/javascript">alert("회원가입 완료");window.location.href = "/users/login";</script>');
+            res.send('<script type="text/javascript">alert("정보 수정 완료");window.location.href = "/users/info";</script>');
 		} else {
-            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');   
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/info";</script>');   
         }
     });
 });
