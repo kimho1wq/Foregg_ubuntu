@@ -34,7 +34,7 @@ router.get('/join', function (req, res) {
 
 //router.post('/join', upload.single('join_picture'), function (req, res) {
 router.post('/join', function (req, res) {
-    console.log('join 들어옴');
+    console.log('/join post pass request.');
     if (req.body) {
         //var picture = req.file.path;
         var email = req.body.join_email;
