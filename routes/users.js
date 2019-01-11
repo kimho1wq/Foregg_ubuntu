@@ -265,10 +265,17 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
                 message : ''
             };
           
-            // Get a key for a new Post.
-            //var newPostKey = firebaseDB.ref().child(sess.user.uid).push().key;
+            firebaseDB.collection("users").doc(sess.user.uid+'/picture').set(picture).then(function() {
+                console.log("success");
+                callback(null, resultJson);
+            }).catch(function(error) {
+                console.log(error);
+                resultJson.result = false;
+                resultJson.message = error.message;
+                callback(null, resultJson);
+            });            
             
-            firebaseDB.ref("users/"+sess.user.uid).update({
+            /*firebaseDB.ref("users/"+sess.user.uid).update({
                 picture: picture 
             }).then(function() {
                 console.log("success");
@@ -278,7 +285,7 @@ router.post('/info', upload.single('join_picture'), function (req, res) {
                 resultJson.result = false;
                 resultJson.message = error.message;
                 callback(null, resultJson);
-            });               
+            });*/               
         }
     ],
     function (callback, resultJson) {
