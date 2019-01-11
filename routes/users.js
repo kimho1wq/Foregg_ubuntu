@@ -253,52 +253,12 @@ router.get('/info', function (req, res) {
     res.render('info', { login : req.session.user } );
 });
 
-router.post('/info', upload.single('join_picture'), function (req, res) {
+router.post('/info', upload.single('profile_picture'), function (req, res) {
     console.log('/info post pass request.');
     var sess = req.session;
     var picture = req.file.path;
-    console.log(picture);
-    
-    async.waterfall([    
-        function (callback) {
-            var resultJson = {
-                result : true,
-                message : ''
-            };
-          
-            firebaseDB.collection("users").doc(sess.user.uid+'/picture').set(picture)
-                .then(function() {
-                console.log("success");
-                callback(null, resultJson);
-            }).catch(function(error) {
-                console.log("자꾸여기서오류나ㅠㅠ");
-                console.log(error);
-                resultJson.result = false;
-                resultJson.message = error.message;
-                callback(null, resultJson);
-            });            
-            
-            /*firebaseDB.ref("users/"+sess.user.uid).update({
-                picture: picture 
-            }).then(function() {
-                console.log("success");
-                callback(null, resultJson);
-            }).catch(function(error) {
-                console.log(error);
-                resultJson.result = false;
-                resultJson.message = error.message;
-                callback(null, resultJson);
-            });*/               
-        }
-    ],
-    function (callback, resultJson) {
-        console.log("마지막까지..ㅠ");
-        if(resultJson.result){
-            res.send('<script type="text/javascript">alert("정보 수정 완료");window.location.href = "/users/info";</script>');
-		} else {
-            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/info";</script>');   
-        }
-    });
+   console.log(picture); 
+            res.send('<script type="text/javascript">alert("아직구현중 ㅎ");window.location.href = "/users/info";</script>');   
 });
 
 module.exports = router;
