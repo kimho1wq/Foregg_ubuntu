@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>ForEgg - MY PAGE</title>
+
+		<!-- CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/product.css" rel="stylesheet">
+	</head>
+	<body class="d-flex vh-100 bg-light">
+		<div class="container px-3 py-5 m-auto" style="max-width: 28rem;">
+			<img class="mb-5" src="../img/cs256.png" alt="" width="96" height="96">
+			<h3 class="mb-3 font-weight-normal">USER INFO</h3>
+			
+            <form action="/users/info" method="post" enctype="multipart/form-data">
+				<hr class="my-4">
+				<div class="form-group">
+                    <p>프로필 사진 선택</p>
+                    <input type="file" class="form-control-file" id="join_picture" name="join_picture">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
+			</form>
+            <!--<form action="/users/info" method="post">
+                <div class="form-group">
+                    <label for="join_nickname">닉네임</label>
+                    <input type="text" class="form-control" name="join_nickname" id="join_nickname" maxlength="18" required>
+                </div>
+                <hr class="my-4">
+                <button type="submit" class="btn btn-primary btn-block">프로필 닉네임 수정하기</button>
+			</form>-->
+			<div class="mt-3 text-center small">
+				<a class="mx-2 text-muted" href="/users/login">로그인 하기</a>
+				|
+				<a class="mx-2 text-muted" href="/">홈으로</a>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/bootstrap.bundle.min.js"></script>
+		<script>
+			$(window).bind('beforeunload', function() { return null; });
+			$(document).ready(function()
+			{
+				$("form").on("submit", function (e)
+				{
+					$(window).off("beforeunload");
+					return true;
+				});
+			});
+		</script>
+	</body>
+</html>

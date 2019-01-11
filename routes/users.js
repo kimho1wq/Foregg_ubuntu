@@ -247,4 +247,47 @@ router.get('/logout', function (req, res) {
     }
 });
 
+
+router.get('/info', function (req, res) {
+    console.log('/info get pass request.');
+    res.render('info', { login : req.session.user } );
+});
+
+
+router.post('/info', upload.single('join_picture'), function (req, res) {
+    console.log('/info post pass request.');
+    var sess = req.session;
+    var picture = req.file.path;
+        
+        
+    async.waterfall([    
+        function (callback) {
+            var resultJson = {
+                result : true,
+                message : ''
+            };
+            
+            firebaseDB.collection("users").doc(sess.user.uid).set({
+                picture: picture
+            }).then(function() {
+                console.log("success");
+                callback(null, resultJson);
+            }).catch(function(error) {
+                console.log(error);
+                resultJson.result = false;
+                resultJson.message = error.message;
+                callback(null, resultJson);
+            });            
+        
+        }
+    ],
+    function (callback, resultJson) {
+        if(resultJson.result){
+            res.send('<script type="text/javascript">alert("회원가입 완료");window.location.href = "/users/login";</script>');
+		} else {
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');   
+        }
+    });
+});
+
 module.exports = router;
