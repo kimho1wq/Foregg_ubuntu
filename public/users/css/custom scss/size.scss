@@ -1,6 +1,0 @@
-@each $size, $value in $sizes {
-	.mw-#{$size} { max-width  : $value !important; }
-	.mh-#{$size} { max-height : $value !important; }
-	.iw-#{$size} { min-width  : $value !important; }
-	.ih-#{$size} { min-height : $value !important; }
-}

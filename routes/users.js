@@ -32,11 +32,11 @@ router.get('/join', function (req, res) {
     res.render('join', { login : req.session.user } );
 });
 
-
-router.post('/join', upload.single('join_picture'), function (req, res) {
+//router.post('/join', upload.single('join_picture'), function (req, res) {
+router.post('/join', function (req, res) {
     console.log('join 들어옴');
     if (req.body) {
-        var picture = req.file.path;
+        //var picture = req.file.path;
         var email = req.body.join_email;
         var password = req.body.join_password;
         var nickname = req.body.join_nickname;
@@ -62,7 +62,7 @@ router.post('/join', upload.single('join_picture'), function (req, res) {
                                     resultJson.uid = user.uid;
                                     firebaseDB.collection("users").doc(user.uid).set({
                                         uid : user.uid,
-                                        picture: picture,
+                                        picture: null,
                                         nickname: nickname,
                                         email: email,
                                         phone: phone,
