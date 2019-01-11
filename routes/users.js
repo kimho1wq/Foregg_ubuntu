@@ -62,7 +62,6 @@ router.post('/join', function (req, res) {
                                     resultJson.uid = user.uid;
                                     firebaseDB.collection("users").doc(user.uid).set({
                                         uid : user.uid,
-                                        picture: null,
                                         nickname: nickname,
                                         email: email,
                                         phone: phone,
@@ -273,8 +272,36 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
     console.log('/info post pass request.');
     var sess = req.session;
     var picture = req.file.path;
-   console.log(picture); 
-            res.send('<script type="text/javascript">alert("아직구현중 ㅎ");window.location.href = "/users/info";</script>');   
+    console.log(picture); 
+   
+    async.waterfall([    
+        function (callback) {
+            var resultJson = {
+                result : true,
+                message : ''
+            };
+                    
+            var data = [picture, sess.user.uid];
+            pool.query("INSERT INTO users(user_picture) VALUES (?) WHERE user_uid = ?", data, (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = '회원 정보 삽입 오류';
+                    callback(null, resultJson);
+                } else {
+                    sess.user.picture = picture;
+                    callback(null, resultJson);
+                }
+            });
+        }
+    ],
+    function (callback, resultJson) {
+         if(resultJson.result){
+             res.send('<script type="text/javascript">alert("회원 정보 수정 완료");window.location.href = "/";</script>');
+         } else {
+             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/info";</script>');  
+          }
+    }); 
 });
 
 module.exports = router;
