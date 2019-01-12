@@ -298,7 +298,7 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
              res.send('<script type="text/javascript">alert("회원 정보 수정 완료");window.location.href = "/";</script>');
          } else {
              res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/info";</script>');  
-          }
+         }
     }); 
 });
 
