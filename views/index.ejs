@@ -67,19 +67,21 @@
 					</div>
 				</div>
 				<% for (var i = 0; i < matchData.length; i++) { %>
-				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
-					<div class="d-flex">
-						<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
-							<p class="font-weight-bold my-1"><%=matchData[i].match_title%></p>
-							<small class="text-muted">by <%=matchData[i].user_nickname%></small>
-							<div class="align-items-center d-flex mt-auto small text-muted">
-								<span class="border px-2 py-1 rounded-pill"><%=matchData[i].type_name%></span>
-								<span class="ml-auto"><%=matchData[i].match_create_date%></span>
-							</div>
-						</div>
-						<img class="my-card-image" src="<%=matchData[i].user_picture%>">
-					</div>
-				</div>
+                <a href="/content?id=<%=matchData[i].match_id%>">
+                    <div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
+                        <div class="d-flex">
+                            <div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
+                                <p class="font-weight-bold my-1"><%=matchData[i].match_title%></p>
+                                <small class="text-muted">by <%=matchData[i].user_nickname%></small>
+                                <div class="align-items-center d-flex mt-auto small text-muted">
+                                    <span class="border px-2 py-1 rounded-pill"><%=matchData[i].type_name%></span>
+                                    <span class="ml-auto"><%=matchData[i].match_create_date%></span>
+                                </div>
+                            </div>
+                            <img class="my-card-image" src="<%=matchData[i].user_picture%>">
+					   </div>
+				    </div>
+                </a>
 				<% } %>
                 
 			</div>
