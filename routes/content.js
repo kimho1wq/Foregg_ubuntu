@@ -16,7 +16,7 @@ router.get('/',function(req, res, next) {
 		}
 	],
     function (callback, resultJson) {
-        pool.query('SELECT * FROM matching WHERE match_id = ?', [content_id], (err, rows) => {
+        pool.query('SELECT * FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {
             if (err) {
                 console.log(err);               
                 res.send('<script type="text/javascript">alert("DB SELECT ERROR1 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 

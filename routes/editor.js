@@ -21,7 +21,7 @@ router.get('/',function(req, res, next) {
                 flag: true
             };
             
-            pool.query('SELECT * FROM matching WHERE match_flag = 1', (err, rows) => {
+            pool.query('SELECT * FROM match_contents WHERE match_flag = 1', (err, rows) => {
                 if (err) {
                     console.log(err);               
                     res.send('<script type="text/javascript">alert("DB SELECT ERROR2 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
@@ -34,7 +34,7 @@ router.get('/',function(req, res, next) {
             });
 		},
         function (resultJson, callback) {
-            pool.query('SELECT * FROM matching WHERE match_flag = 0 AND match_type = 1', (err, rows) => {
+            pool.query('SELECT * FROM match_contents WHERE match_flag = 0 AND match_type = 1', (err, rows) => {
                 if (err) {
                     console.log(err);               
                     res.send('<script type="text/javascript">alert("DB SELECT ERROR3 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
@@ -47,7 +47,7 @@ router.get('/',function(req, res, next) {
             });
 		},
         function (resultJson, callback) {
-            pool.query('SELECT * FROM matching WHERE match_flag = 0 AND match_type = 2', (err, rows) => {
+            pool.query('SELECT * FROM match_contents WHERE match_flag = 0 AND match_type = 2', (err, rows) => {
                 if (err) {
                     console.log(err);               
                     res.send('<script type="text/javascript">alert("DB SELECT ERROR4 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
@@ -60,7 +60,7 @@ router.get('/',function(req, res, next) {
             });
 		},
         function (resultJson, callback) {
-            pool.query('SELECT * FROM matching', (err, rows) => {
+            pool.query('SELECT * FROM match_contents', (err, rows) => {
                 if (err) {
                     console.log(err);               
                     res.send('<script type="text/javascript">alert("DB SELECT ERROR5 - 다시 시도해주시기 바랍니다.");window.location.href = "/";</script>'); 
@@ -74,7 +74,7 @@ router.get('/',function(req, res, next) {
 		}
 	],
     function (callback, resultJson) {
-        pool.query('SELECT * FROM matching ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
+        pool.query('SELECT * FROM match_contents ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
             if (err) {
                 console.log(err);               
                 res.send('<script type="text/javascript">alert("DB SELECT ERROR1 - 다시 시도해주시기 바랍니다.");window.location.href = "/";</script>'); 

@@ -2,15 +2,42 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
+
 router.get('/',function(req, res, next) {
     console.log('/post get pass request.');
-    var tags = ["전체", "뷰티", "먹방/요리", "여행", "영상", "리뷰", "게임", "공부", "IRL", "음악(커버영상)", "댄스", "ASMR", "액티비티", "Vlog"];
     if(req.session.user) {
-        res.render('post', { login : req.session.user, tags : tags });
+        async.waterfall([
+            function (callback) {
+            
+                var resultJson = {
+                    result: true,
+                    message: '',
+                    tags: null
+                };
+            
+                pool.query("SELECT * FROM match_contents_type", (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'match type 검색 오류';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.tags = rows; 
+                        callback(null, resultJson);
+                    }
+                });
+            }
+        ],
+        function (callback, resultJson) {
+            if(resultJson.result) {
+                res.render('post', { login : req.session.user, tags : resultJson.tags });
+            } else {
+                res.send('<script type="text/javascript">alert("' + resultJson.message + '");window.location.href = "/users/login";</script>');
+            }     
+        });
     } else {
-        res.send('<script type="text/javascript">alert(" 로그인을 해야합니다. ");window.location.href = "/login";</script>');
+        res.send('<script type="text/javascript">alert("로그인이 필요합니다.");window.location.href = "/users/login";</script>');
     }
-
 });
 
 

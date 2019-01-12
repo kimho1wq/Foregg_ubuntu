@@ -29,7 +29,7 @@
 							<% for (var i = 0; i < tags.length; i++) { %>
 							<div class="input-container">
 								<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="radio" value="<%=i%>" <% if (i == 0) { %> checked <% } %> >
-								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i]%></label>
+								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i].type_name%></label>
 							</div>
 							<% } %>
 						</div>
