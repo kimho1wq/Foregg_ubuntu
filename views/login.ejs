@@ -31,13 +31,13 @@
 				<a class="mx-2 text-muted" href="#">비밀번호 찾기</a>
 				|
 				<a class="mx-2 text-muted" href="/users/join">회원가입</a>
+				<br>
+				<hr>
+        <div class="fb-login-button" data-width="1" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
 			</div>
 		</div>
 
-        <div id="fb-root"></div>
-        <div class="fb-login-button" data-width="1" data-max-rows="1" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
         
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
         <script>
             window.fbAsyncInit = function() {
                 FB.init({

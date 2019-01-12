@@ -310,14 +310,5 @@ router.post('/login_fb', function (req, res) {
     });
 });
 
-{
-    status: 'connected',
-    authResponse: {
-        accessToken: '...',
-        expiresIn:'...',
-        signedRequest:'...',
-        userID:'...'
-    }
-}
 
 module.exports = router;
