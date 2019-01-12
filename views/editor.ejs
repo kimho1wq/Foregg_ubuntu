@@ -22,11 +22,6 @@
 				</p>
 			</div>
 		</div>
-		<!--div class="row bg-light py-4 py-md-5 m-0 text-center text-muted">
-			<span class="col-md-8 mb-3 m-md-0">지금까지 성사된 매칭<br><h4 class="m-0"><%=matchCompleted%>회</h4></span>
-			<span class="col-md-8 mb-3 m-md-0">매칭을 기다리는 크리에이터<br><h4 class="m-0"><%=createrMatching%>명</h4></span>
-			<span class="col-md-8">매칭을 기다리는 전문가<br><h4 class="m-0"><%=editorMatching%>명</h4></span>
-		</div-->
 		<!-- Category : 전체, 뷰티, 먹방/요리, 여행, 영상, 리뷰, 게임, 공부, IRL, 음악(커버영상), 댄스, ASMR -->
 		<div class="container py-5">
 			<!--nav class="nav nav-fill nav-pills p-2 mb-3 border">
@@ -43,12 +38,14 @@
 				<% for (var i = 0; i < matchData.length; i++) { %>
 					<a class="list-group-item list-group-item-action d-flex" href="/content?id=<%=matchData[i].match_id%>">               
 						<div class="col-18 p-0">
-							<h6 class="m-0"><span class="badge badge-primary mr-1">배지</span><%=matchData[i].match_title%></h6>
-							<small class="text-muted"><%=matchData[i].match_nickname%></small>
+							<h6 class="m-0"><span class="badge badge-primary mr-1"><%=matchData[i].type_name%></span><%=matchData[i].match_title%></h6>
+							<small class="text-muted"><%=matchData[i].user_nickname%></small>
 						</div>
 						<div class="col-6 p-0 text-right">
-							<small class="text-muted"><%=matchData[i].match_create_date%></small>
+							<small class="text-muted"><%=matchData[i].match_create_date%> </small>
 						</div>
+						<img src="<%=matchData[i].user_picture%>" class="h-2r rounded-pill w-auto">
+							
 					</a>
 				<% } %>
 				</div>
