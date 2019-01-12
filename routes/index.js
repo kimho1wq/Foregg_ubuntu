@@ -5,107 +5,121 @@ var async = require('async');
 router.get('/',function(req, res, next) {
     console.log('/ get pass request.');
 
-    var page = 1;
-    var matchCompleted = -1;
-    var editorMatching = -1;
-    var createrMatching = -1;
-    var maxLength = -1;
+    var page = req.query.page;
+    if(!page) page = 1;
     
-    var limitPage = 1;
-    var limitSize = 3;
-
     async.waterfall([
 		function (callback) {
             
             var resultJson = {
-                flag: true
+                result: true,
+                message: '',
+                matchCompleted: -1,
+                editorMatching: -1,
+                maxLength: -1,
+                matchData: null,
+                info: null
             };
             
             pool.query('SELECT * FROM match_contents WHERE match_flag = 1', (err, rows) => {
                 if (err) {
-                    console.log(err);               
-                    res.send('<script type="text/javascript">alert("DB SELECT ERROR2 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
-                    return;
-                } 
-                else {
-                    matchCompleted = rows.length;
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = 'DB SELECT ERROR1';
+                    callback(null, resultJson);
+                } else {
+                    resultJson.matchCompleted = rows.length;
                     callback(null, resultJson);
                 }
             });
 		},
         function (resultJson, callback) {
-            pool.query('SELECT * FROM match_contents WHERE match_flag = 0 AND match_type = 1', (err, rows) => {
-                if (err) {
-                    console.log(err);               
-                    res.send('<script type="text/javascript">alert("DB SELECT ERROR3 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
-                    return;
-                } 
-                else {
-                    editorMatching = rows.length;
-                    callback(null, resultJson);
-                }
-            });
-		},
-        function (resultJson, callback) {
-            pool.query('SELECT * FROM match_contents WHERE match_flag = 0 AND match_type = 2', (err, rows) => {
-                if (err) {
-                    console.log(err);               
-                    res.send('<script type="text/javascript">alert("DB SELECT ERROR4 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
-                    return;
-                } 
-                else {
-                    createrMatching = rows.length;
-                    callback(null, resultJson);
-                }
-            });
-		},
-        function (resultJson, callback) {
-            pool.query('SELECT * FROM match_contents', (err, rows) => {
-                if (err) {
-                    console.log(err);               
-                    res.send('<script type="text/javascript">alert("DB SELECT ERROR5 - 다시 시도해주시기 바랍니다.");window.location.href = "/";</script>'); 
-                    return;
-                } 
-                else {
-                    maxLength = rows.length;
-                    callback(null, resultJson);
-                }
-            });
-		}
-    ],
-    function (callback, resultJson) {
-        pool.query('SELECT * FROM match_contents ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
-            if (err) {
-                console.log(err);
-                res.send('<script type="text/javascript">alert("DB SELECT ERROR1 - 다시 시도해주시기 바랍니다.");window.location.href = "/";</script>'); 
-                return;
-            } 
-            else {
-                var pageNum = Math.ceil(maxLength/limitSize);
-                var no = maxLength-((page - 1)*limitSize);
-                var startPage = (Math.floor((page-1)/limitPage)*limitPage)+1;
-                var endPage = startPage + limitPage - 1;
-                if(endPage > pageNum) 
-                    endPage = pageNum;
-                
-                for(var i = 0; i < rows.length; i++) {
-                    //Tue Jan 01 2019 08:29:42 GMT+0000
-                    //2019-01-01 08:29:20
-                    var str = rows[i].match_create_date.toISOString().substr(0,10);
-                    rows[i].match_create_date = str;
-                }
-                var info = { startPage: startPage, endPage: endPage, limitPage: limitPage, active: page, pagination: pageNum, no: no };
-                
-                if( matchCompleted != -1 && editorMatching != -1 && createrMatching != -1) {
-                    
-                    res.render('index', { login : req.session.user, matchData: rows, matchCompleted: matchCompleted, editorMatching: editorMatching, createrMatching: createrMatching, info: info });
-                }
-                else {
-                    res.send('<script type="text/javascript">alert("ERROR - 다시 시도해주시기 바랍니다.ㅎㅎ");window.location.href = "/";</script>');
-                }
+            if(resultJson.result) {
+                pool.query('SELECT * FROM match_contents WHERE match_flag = 0', (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR2';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.editorMatching = rows.length;
+                        callback(null, resultJson);
+                    }
+                });
+            } else {
+                callback(null, resultJson);
             }
-        });
+            
+		},
+        function (resultJson, callback) {
+            if(resultJson.result) {
+                pool.query('SELECT * FROM match_contents', (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR3';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.maxLength = rows.length;
+                        callback(null, resultJson);
+                    }
+                });
+            } else {
+                callback(null, resultJson);
+            }
+		},
+        function (resultJson, callback) {
+            if(resultJson.result) {
+                 
+                var limitPage = 5;
+                var limitSize = 10;
+                
+                pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct WHERE mc.match_writer = u.user_uid AND mc.match_type = mct.type ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR4';
+                        callback(null, resultJson);
+                    } else {
+                        var pageNum = Math.ceil(resultJson.maxLength/limitSize);
+                        var no = resultJson.maxLength-((page - 1)*limitSize);
+                        var startPage = (Math.floor((page-1)/limitPage)*limitPage)+1;
+                        var endPage = startPage + limitPage - 1;
+                        if(endPage > pageNum) 
+                            endPage = pageNum;
+                
+                        for(var i = 0; i < rows.length; i++) {
+                            //Tue Jan 01 2019 08:29:42 GMT+0000
+                            //2019-01-01 08:29:20
+                            var str = rows[i].match_create_date.toISOString().substr(0,10);
+                            rows[i].match_create_date = str;               
+                        }
+                        resultJson.matchData = rows;
+                        resultJson.info = { 
+                            startPage: startPage,
+                            endPage: endPage,
+                            limitPage: limitPage,
+                            active: page,
+                            pagination: pageNum,
+                            no: no
+                        };
+                        
+                        callback(null, resultJson);
+                    }
+                });  
+            } else {
+                callback(null, resultJson);
+            }
+		}
+	],
+    function (callback, resultJson) {
+        if(resultJson.result) {
+            res.render('index', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info });
+        } else {
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "error";</script>');
+        }
     });
+    
     // res.render('index', { login : req.session.user });
 });
 
