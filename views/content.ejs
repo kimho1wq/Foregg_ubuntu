@@ -19,26 +19,18 @@
 				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
 			</div>
 		</div>
-        <div><p>매칭은 어떻게 구현을 할까요~~</p></div>
         <div>
             <p>제목</p>
             <p class="main-text"><strong> <%=matchData.match_title%></strong></p>
 		</div>
         <div>
-            <p>닉네임</p>
-            <p class="main-text"><strong> <%=matchData.match_nickname%></strong></p>
+            <p>작성자</p>
+            <p class="main-text"><strong> <%=matchData.users_nickname%></strong></p>
 		</div>
         <div>
             <p>회원유형</p>
             <p class="main-text"><strong>
-                <%var tmp = matchData.match_type%>
-                <%if(tmp == 1) {%>
-                    <p class="main-text"><strong> 영상편집자</strong></p>
-                <%} else if(tmp == 2) {%>
-                    <p class="main-text"><strong> 크리에이터</strong></p>
-                <%} else {%>
-                    <p class="main-text"><strong> 기타</strong></p>
-                <%}%>
+                <p class="main-text"><strong> <%=matchData.type_name%></strong></p>
             </strong></p>
 		</div>
 		<div>

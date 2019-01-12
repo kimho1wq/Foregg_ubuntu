@@ -26,9 +26,9 @@
 					<label for="post_tag" class="col-sm-5">분류</label>
 					<div class="col-sm-19">
 						<div class="radio-tile-group">
-							<% for (var i = 0; i < tags.length; i++) { %>
+							<% for (var i = 1; i <= tags.length; i++) { %>
 							<div class="input-container">
-								<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="radio" value="<%=i%>" <% if (i == 0) { %> checked <% } %> >
+								<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="post_type" value="<%=i%>" <% if (i == 1) { %> checked <% } %> >
 								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i].type_name%></label>
 							</div>
 							<% } %>
@@ -48,23 +48,6 @@
 						<input type="text" class="form-control" name="post_nickname" id="post_nickname" placeholder="별명을 입력하세요" required>
 					</div>
 				</div>
-				<!--div class="form-group row">
-					<label class="col-sm-5">회원유형</label>
-					<div class="col-sm-19">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="post_type" id="post_type1" value="1" checked>
-							<label class="form-check-label" for="post_type1">영상편집자</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="post_type" id="post_type2" value="2">
-							<label class="form-check-label" for="post_type2">크리에이터</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="post_type" id="post_type3" value="3">
-							<label class="form-check-label" for="post_type3">기타</label>
-						</div>
-					</div>
-				</div-->
 				<div class="form-group row">
 					<label class="col-sm-5">내용</label>
 					<div class="col-sm-19">

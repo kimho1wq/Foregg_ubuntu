@@ -9,30 +9,31 @@ router.get('/',function(req, res, next) {
     async.waterfall([
 		function (callback) {
             var resultJson = {
-                flag: true
+                result : true,
+                message : '',
+                matchData: null
             };
             
-            callback(null, resultJson);
+            pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct WHERE mc.match_id = ? AND mc.match_writer = u.user_uid AND mc.match_type = mct.type', [content_id], (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = '글 정보를 찾지 못하였습니다.';
+                    callback(null, resultJson);
+                } else {
+                    resultJson.matchData = rows[0];
+                    callback(null, resultJson);
+                }
+            });    
 		}
 	],
     function (callback, resultJson) {
-        pool.query('SELECT * FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {
-            if (err) {
-                console.log(err);               
-                res.send('<script type="text/javascript">alert("DB SELECT ERROR1 - 다시 시도해주시기 바랍니     다.");window.location.href = "/";</script>'); 
-                return;
-            } 
-            else {
-                if(rows) { 
-                    res.render('content', { login : req.session.user, matchData: rows[0] });
-                }
-                else {
-                    res.send('<script type="text/javascript">alert("ERROR - 다시 시도해주시기 바랍니다.ㅎㅎ");window.location.href = "/";</script>');
-                }
-            }
-        });    
+        if(resultJson.result) { 
+            res.render('content', { login : req.session.user, matchData: resultJson.matchData });
+        } else {
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');
+        }
     });
-    
 });
 
 

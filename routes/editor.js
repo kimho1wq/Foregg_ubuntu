@@ -6,6 +6,7 @@ router.get('/',function(req, res, next) {
     console.log('/editor get pass request.');
     
     var page = req.param('page');
+    if(!page) page = 1;
     var matchCompleted = -1;
     var editorMatching = -1;
     var createrMatching = -1;
