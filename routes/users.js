@@ -305,7 +305,7 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
 router.post('/login_fb', function (req, res) {
     console.log('/fb login post pass request.');
     
-    var provider = new firebase.auth.FacebookAuthProvider();
+    /*var provider = new firebase.auth.FacebookAuthProvider();
     console.log('provider good');
     firebase.auth().languageCode = 'fr_FR';
     // To apply the default browser preference instead of explicitly setting it.
@@ -333,10 +333,11 @@ router.post('/login_fb', function (req, res) {
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
+        console.log('error.code: '+error.code);
         console.log('error.message: '+error.message);
         console.log('error.email: '+error.email);
         // ...
-    });
+    });*/
    
     /*firebase.auth().signOut().then(function() {
         // Sign-out successful.
