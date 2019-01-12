@@ -303,11 +303,46 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
 });
 
 router.post('/login_fb', function (req, res) {
-    console.log('/info post pass request.');
+    console.log('/fb login post pass request.');
     
-    FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
+    var provider = new firebase.auth.FacebookAuthProvider();
+    console.log('provider good');
+    firebase.auth().languageCode = 'fr_FR';
+    // To apply the default browser preference instead of explicitly setting it.
+    // firebase.auth().useDeviceLanguage();
+    console.log('lang code good');
+    provider.setCustomParameters({
+        'display': 'popup'
     });
+    
+    console.log('-----auth start-----');
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        console.log('result: '+result);
+        var token = result.credential.accessToken;
+        console.log('token: '+token);
+        // The signed-in user info.
+        var user = result.user;
+        console.log('user: '+user);
+        // ...
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        console.log('error.message: '+error.message);
+        console.log('error.email: '+error.email);
+        // ...
+    });
+   
+    /*firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+    }).catch(function(error) {
+        // An error happened.
+    });*/
 });
 
 
