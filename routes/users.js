@@ -302,4 +302,22 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
     }); 
 });
 
+router.post('/login_fb', function (req, res) {
+    console.log('/info post pass request.');
+    
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
+});
+
+{
+    status: 'connected',
+    authResponse: {
+        accessToken: '...',
+        expiresIn:'...',
+        signedRequest:'...',
+        userID:'...'
+    }
+}
+
 module.exports = router;
