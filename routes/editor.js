@@ -5,7 +5,7 @@ var async = require('async');
 router.get('/',function(req, res, next) {
     console.log('/editor get pass request.');
     
-    var page = req.body('page');
+    var page = req.query.page;
     if(!page) page = 1;
     var matchCompleted = -1;
     var editorMatching = -1;

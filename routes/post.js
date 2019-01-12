@@ -15,7 +15,6 @@ router.get('/',function(req, res, next) {
                     tags: null
                 };
             
-                console.log('/content 쿼리 시작');
                 pool.query("SELECT * FROM match_contents_type", (err, rows) => {
                     if (err) {
                         console.log(err);
@@ -23,9 +22,6 @@ router.get('/',function(req, res, next) {
                         resultJson.message = 'match type 검색 오류';
                         callback(null, resultJson);
                     } else {
-                        console.log("row:"+rows);
-                        console.log(rows[0]);
-                        console.log(rows[0].type_name);
                         resultJson.tags = rows; 
                         callback(null, resultJson);
                     }
@@ -33,9 +29,6 @@ router.get('/',function(req, res, next) {
             }
         ],
         function (callback, resultJson) {
-            console.log("resultJson.tags:"+resultJson.tags);
-            console.log(resultJson.tags[0]);
-            console.log(resultJson.tags[0].type_name);
             if(resultJson.result) {
                 res.render('post', { login : req.session.user, tags : resultJson.tags });
             } else {
@@ -73,9 +66,9 @@ router.post('/', function(req, res, next) {
                 message : ''
             };
             
-            var data = [title, content, nickname, writer, type];
+            var data = [title, content, writer, type];
    
-            pool.query('INSERT INTO match_contents (match_title, match_content, match_writer, match_type) VALUES (?,?,?,?,?)', data , (err, rows) => {
+            pool.query('INSERT INTO match_contents (match_title, match_content, match_writer, match_type) VALUES (?,?,?,?)', data , (err, rows) => {
                 if (err) {
                     console.log(err);
                     resultJson.result = false;

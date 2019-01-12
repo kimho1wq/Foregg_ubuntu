@@ -4,7 +4,7 @@ var async = require('async');
 
 router.get('/',function(req, res, next) {
     console.log('/content get pass request.');
-    var content_id = req.body('id');
+    var content_id = req.query.id;
     
     async.waterfall([
 		function (callback) {
@@ -13,7 +13,6 @@ router.get('/',function(req, res, next) {
                 message : '',
                 matchData: null
             };
-            
             
             pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct WHERE mc.match_id = ? AND mc.match_writer = u.user_uid AND mc.match_type = mct.type', [content_id], (err, rows) => {
                 if (err) {

@@ -29,7 +29,7 @@
 							<% for (var i = 1; i <= tags.length; i++) { %>
 							<div class="input-container">
 								<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="post_type" value="<%=i%>" <% if (i == 1) { %> checked <% } %> >
-								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i].type_name%></label>
+								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i-1].type_name%></label>
 							</div>
 							<% } %>
 						</div>
@@ -40,12 +40,6 @@
 					<label for="post_title" class="col-sm-5">제목</label>
 					<div class="col-sm-19">
 						<input type="text" class="form-control" name="post_title" id="post_title" placeholder="제목을 입력하세요" required>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="post_nickname" class="col-sm-5">별명</label>
-					<div class="col-sm-19">
-						<input type="text" class="form-control" name="post_nickname" id="post_nickname" placeholder="별명을 입력하세요" required>
 					</div>
 				</div>
 				<div class="form-group row">
