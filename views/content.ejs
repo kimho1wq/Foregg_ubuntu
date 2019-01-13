@@ -15,17 +15,20 @@
 		<% include common/header.ejs %>
 		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
 			<div class="text-white">
-				<h2 class="display-4 font-weight-normal">편집자 연결 - 내용</h2>
+				<h2 class="display-4 font-weight-normal">전문가 매칭</h2>
 				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
 			</div>
 		</div>
 		<div class="container py-5">
-			<a href="/editor" class="btn btn-sm btn-outline-secondary mb-3">돌아가기</a>
+			<a href="/editor" class="btn btn-sm btn-outline-secondary mb-3">‹ 돌아가기</a>
 			<div>
-				<h4>[<%=matchData.type_name%>]<%=matchData.match_title%></h4>
+				<h4><span class="text-primary">[<%=matchData.type_name%>]</span><%=matchData.match_title%></h4>
 				<div class="row m-0 text-muted small">
-					<p class="col-18 col-md p-0 m-0">[회원유형]<span class="ml-2"><%=matchData.user_nickname%></span></p>
-					<p class="col-6 p-0 m-0 text-right">작성날짜</p>
+					<p class="col-18 col-md p-0 m-0">
+						<img src="<%=matchData.user_picture%>" class="h-2r rounded-pill w-auto">
+						<%=matchData.user_nickname%>
+					</p>
+					<p class="col-6 p-0 m-0 text-right"><%=match_create_date%></p>
 				</div>
 			</div>
 			<hr>
@@ -37,7 +40,7 @@
 			</p>
 			<hr>
 			<div>
-				<a href="/editor" class="btn btn-sm btn-outline-secondary">돌아가기</a>
+				<a href="/editor" class="btn btn-sm btn-outline-secondary">‹ 돌아가기</a>
 				<button class="btn btn-sm btn-outline-primary">버튼</button>
 			</div>
 			<!-- TODO: Buttons here -->
