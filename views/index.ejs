@@ -26,64 +26,23 @@
 			<h4 class="text-center">새로 올라온 매칭</h4>
 			<hr class="w-2r">
 			<div class="d-flex flex-wrap justify-content-center">
-                
+ 				<% for (var i = 0; i < matchData.length; i++) { %>
 				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
-					<div class="d-flex">
-						<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
-							<p class="font-weight-bold my-1">게임 스트리머 구해요~</p>
-							<small class="text-muted">by JJmovie</small>
-							<div class="align-items-center d-flex mt-auto small text-muted">
-								<span class="border px-2 py-1 rounded-pill">게임</span>
-								<span class="ml-auto">2018-12-17</span>
+					<a href="/content?id=<%=matchData[i].match_id%>">
+						<div class="d-flex">
+							<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
+								<p class="text-dark font-weight-bold my-1"><%=matchData[i].match_title%></p>
+								<small class="text-muted">by <%=matchData[i].user_nickname%></small>
+								<div class="align-items-center d-flex mt-auto small text-muted">
+									<span class="border px-2 py-1 rounded-pill"><%=matchData[i].type_name%></span>
+									<span class="ml-auto"><%=matchData[i].match_create_date%></span>
+								</div>
 							</div>
+							<img class="my-card-image" src="<%=matchData[i].user_picture%>">
 						</div>
-						<img class="my-card-image" src="img/profile5.jpg">
-					</div>
+					</a>
 				</div>
-				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
-					<div class="d-flex">
-						<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
-							<p class="font-weight-bold my-1">주행영상 위주로 해요!</p>
-							<small class="text-muted">by tube</small>
-							<div class="align-items-center d-flex mt-auto small text-muted">
-								<span class="border px-2 py-1 rounded-pill">액티비티</span>
-								<span class="ml-auto">2018-12-16</span>
-							</div>
-						</div>
-						<img class="my-card-image" src="img/profile6.jpg">
-					</div>
-				</div>
-				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
-					<div class="d-flex">
-						<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
-							<p class="font-weight-bold my-1">깔끔한 브이로그 편집 전문</p>
-							<small class="text-muted">by gunhoflash</small>
-							<div class="align-items-center d-flex mt-auto small text-muted">
-								<span class="border px-2 py-1 rounded-pill">Vlog</span>
-								<span class="ml-auto">2018-12-12</span>
-							</div>
-						</div>
-						<img class="my-card-image" src="img/profile7.jpg">
-					</div>
-				</div>
-				<% for (var i = 0; i < matchData.length; i++) { %>
-                <a href="/content?id=<%=matchData[i].match_id%>">
-                    <div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
-                        <div class="d-flex">
-                            <div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
-                                <p class="font-weight-bold my-1"><%=matchData[i].match_title%></p>
-                                <small class="text-muted">by <%=matchData[i].user_nickname%></small>
-                                <div class="align-items-center d-flex mt-auto small text-muted">
-                                    <span class="border px-2 py-1 rounded-pill"><%=matchData[i].type_name%></span>
-                                    <span class="ml-auto"><%=matchData[i].match_create_date%></span>
-                                </div>
-                            </div>
-                            <img class="my-card-image" src="<%=matchData[i].user_picture%>">
-					   </div>
-				    </div>
-                </a>
 				<% } %>
-                
 			</div>
 		</div>
 		<% include common/footer.ejs %>

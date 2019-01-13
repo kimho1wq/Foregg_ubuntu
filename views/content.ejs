@@ -19,27 +19,30 @@
 				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
 			</div>
 		</div>
-        <div>
-            <p class="main-text"><strong>제목 :  <%=matchData.match_title%></strong></p>
+		<div class="container py-5">
+			<a href="/editor" class="btn btn-sm btn-outline-secondary mb-3">돌아가기</a>
+			<div>
+				<h4>[<%=matchData.type_name%>]<%=matchData.match_title%></h4>
+				<div class="row m-0 text-muted small">
+					<p class="col-18 col-md p-0 m-0">[회원유형]<span class="ml-2"><%=matchData.user_nickname%></span></p>
+					<p class="col-6 p-0 m-0 text-right">작성날짜</p>
+				</div>
+			</div>
+			<hr>
+			<p>
+				<%var lines = matchData.match_content.split("\n");%>
+				<%lines.forEach(function(item) {%>
+					<%=item%><br/>
+				<%})%>
+			</p>
+			<hr>
+			<div>
+				<a href="/editor" class="btn btn-sm btn-outline-secondary">돌아가기</a>
+				<button class="btn btn-sm btn-outline-primary">버튼</button>
+			</div>
+			<!-- TODO: Buttons here -->
 		</div>
-        <div>
-            <p class="main-text"><strong> 작성자 : <%=matchData.user_nickname%></strong></p>
-		</div>
-        <div>
-            <p class="main-text"><strong>
-		    <p class="main-text"><strong> 글유형 :  <%=matchData.type_name%></strong></p>
-            </strong></p>
-		</div>
-		<div>
-            <p>[내용]</p>
-            <p class="main-text"><strong>
-                <%var lines = matchData.match_content.split("\n");%>
-                <%lines.forEach(function(item) {%>
-                    <%=item%><br/>
-                <%})%>
-            </strong></p>
-		</div>
-        
+
 		<% include common/footer.ejs %>
 
 		<!-- Bootstrap core JavaScript

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
-
+// TODO: 영상편집자만 글쓰기를 허용
 router.get('/',function(req, res, next) {
     console.log('/post get pass request.');
     if(req.session.user) {
