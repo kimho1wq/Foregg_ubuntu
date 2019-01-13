@@ -44,10 +44,17 @@
 						<div class="col-6 p-0 text-right">
 							<small class="text-muted"><%=matchData[i].match_create_date%> </small>
 						</div>
-						<img src="<%=matchData[i].user_picture%>" class="h-2r rounded-pill w-auto">
+                        <% if (matchData[i].user_picture) { %>
+                            <img src="<%=matchData[i].user_picture%>" class="h-2r rounded-pill w-auto">
+                        <% } else { %>
+                            <img src="img/basic_profile.png" class="h-2r rounded-pill w-auto">
+                        <% } %>
+						
 					</a>
 				<% } %>
 				</div>
+                
+                
 				<nav class="my-3" aria-label="Search results pages">
 					<ul class="pagination justify-content-center">
 					<% if (info.startPage==1) {%>

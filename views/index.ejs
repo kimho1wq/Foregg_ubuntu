@@ -37,7 +37,12 @@
 									<span class="ml-auto"><%=matchData[i].match_create_date%></span>
 								</div>
 							</div>
-							<img class="my-card-image" src="<%=matchData[i].user_picture%>">
+                            <% if (matchData[i].user_picture) { %>
+                                <img class="my-card-image" src="<%=matchData[i].user_picture%>">
+                            <% } else { %>
+                                <img class="my-card-image" src="img/basic_profile.png">
+				            <% } %>
+							
 						</div>
 					</a>
 				</div>
