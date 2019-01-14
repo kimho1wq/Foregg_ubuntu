@@ -31,7 +31,7 @@ router.get('/',function(req, res, next) {
         if(resultJson.result) { 
             res.render('content', { login : req.session.user, matchData: resultJson.matchData });
         } else {
-            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/editor";</script>');
         }
     });
 });
@@ -63,7 +63,7 @@ router.post('/', function(req, res, next) {
         if(resultJson.result) { 
             res.send('<script type="text/javascript">alert("삭제 되었습니다.");window.location.href = "/editor";</script>');
         } else {
-            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/editor";</script>');
         }
     });
 });
