@@ -38,7 +38,7 @@ router.get('/',function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     console.log('/content post pass request.');
-    var content_id = req.query.id;
+    var content_id = req.body.id;
     
     async.waterfall([
 		function (callback) {
