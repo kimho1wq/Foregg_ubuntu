@@ -50,7 +50,7 @@ router.post('/', function(req, res, next) {
     var writer = req.session.user.uid;
     var video_link = req.body.post_link;
     var video_count = 1;
-    if(video_link)
+    if(!video_link)
         video_count = 0;
     
     if(!req.session.user) {
