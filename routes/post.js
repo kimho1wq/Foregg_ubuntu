@@ -48,7 +48,7 @@ router.post('/', function(req, res, next) {
     var content = req.body.post_content;
     var type = req.body.post_type;
     var writer = req.session.user.uid;
-    
+    var video_link = req.body.post_link;
     if(!req.session.user) {
         res.send('<script type="text/javascript">alert("로그인하셔야 합니다.");window.location.href = "/users/login";</script>');
         return;
@@ -72,7 +72,40 @@ router.post('/', function(req, res, next) {
                 if (err) {
                     console.log(err);
                     resultJson.result = false;
-                    resultJson.message = '글쓰기 삽입 오류';
+                    resultJson.message = '글쓰기 삽입 오류1';
+                    callback(null, resultJson);
+                } else {
+                    callback(null, resultJson);
+                }
+            });
+        },
+        function (resultJson, callback) {   
+            
+            var data = [title, content, writer, type];
+   
+            pool.query('SELECT match_id FROM match_contents WHERE match_title=?, match_content=?, match_writer=?, match_type=? ORDER BY match_create_date DESC', data , (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = '글쓰기 삽입 오류2';
+                    callback(null, resultJson);
+                } else {
+                    resultJson.match_id = rows[0].match_id;
+                    console.log('rows[0]:'+rows[0]);
+                    console.log('rows[0].match_id:'+rows[0].match_id);
+                    callback(null, resultJson);
+                }
+            });
+        },
+        function (resultJson, callback) {   
+            
+            var data = [resultJson.match_id, video_link];
+   
+            pool.query('INSERT INTO match_contents_video (match_video_id, match_video_link) VALUES (?,?)', data , (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = '글쓰기 삽입 오류2';
                     callback(null, resultJson);
                 } else {
                     callback(null, resultJson);
