@@ -51,10 +51,9 @@ router.post('/', function(req, res, next) {
                 if (err) {
                     console.log(err);
                     resultJson.result = false;
-                    resultJson.message = '글 정보를 찾지 못하였습니다.';
+                    resultJson.message = '삭제하지 못하였습니다.';
                     callback(null, resultJson);
                 } else {
-                    resultJson.matchData = rows[0];
                     callback(null, resultJson);
                 }
             });    
