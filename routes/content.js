@@ -44,19 +44,53 @@ router.post('/', function(req, res, next) {
 		function (callback) {
             var resultJson = {
                 result : true,
-                message : ''   
+                message : '',
+                match_data
             };
             
-            pool.query('DELETE FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {
+            pool.query('SELECT match_id, match_video_count FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {
                 if (err) {
                     console.log(err);
                     resultJson.result = false;
-                    resultJson.message = '삭제하지 못하였습니다.';
+                    resultJson.message = 'DB 삭제 오류1';
                     callback(null, resultJson);
                 } else {
+                    resultJson.match_data = rows[0];
                     callback(null, resultJson);
                 }
             });    
+		},
+        function (resultJson, callback) {
+            if(resultJson && resultJson.match_data.match_video_count) {
+                pool.query('DELETE FROM match_contents_video WHERE match_video_id = ?', [content_id], (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB 삭제 오류2';
+                        callback(null, resultJson);
+                    } else {
+                        callback(null, resultJson);
+                    }
+                });    
+            } else {
+                callback(null, resultJson);
+            }    
+		},
+        function (resultJson, callback) {
+            if(resultJson) {
+                pool.query('DELETE FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB 삭제 오류3';
+                        callback(null, resultJson);
+                    } else {
+                        callback(null, resultJson);
+                    }
+                });    
+            } else {
+                callback(null, resultJson);
+            }    
 		}
 	],
     function (callback, resultJson) {
