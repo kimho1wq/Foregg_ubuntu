@@ -18,7 +18,8 @@ router.get('/',function(req, res, next) {
                 editorMatching: -1,
                 maxLength: -1,
                 matchData: null,
-                info: null
+                info: null,
+                match_videoData: null
             };
             
             pool.query('SELECT * FROM match_contents WHERE match_flag = 1', (err, rows) => {
@@ -74,7 +75,7 @@ router.get('/',function(req, res, next) {
                 var limitPage = 5;
                 var limitSize = 10;
                 
-                pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct, match_contents_video mcv WHERE mc.match_writer = u.user_uid AND mc.match_type = mct.type AND mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
+                pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct WHERE mc.match_writer = u.user_uid AND mc.match_type = mct.type ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
                     if (err) {
                         console.log(err);
                         resultJson.result = false;
@@ -110,11 +111,29 @@ router.get('/',function(req, res, next) {
             } else {
                 callback(null, resultJson);
             }
+		},
+        function (resultJson, callback) {
+            if(resultJson.result) {
+                    pool.query('SELECT match_id, match_video_link, match_create_date FROM match_contents mc, match_contents_video mcv WHERE mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC', (err, rows) => {
+                        if (err) {
+                            console.log(err);
+                            resultJson.result = false;
+                            resultJson.message = 'DB SELECT ERROR5';
+                            callback(null, resultJson);
+                        } else {
+                            resultJson.match_videoData = rows;
+                            callback(null, resultJson);
+                        }
+                    });
+                }
+            } else {
+                callback(null, resultJson);
+            }
 		}
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info });
+            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData });
         } else {
             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/";</script>');
         }

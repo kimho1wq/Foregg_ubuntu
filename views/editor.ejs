@@ -35,10 +35,11 @@
 			<div>
 				<!-- TODO: List here -->
 				<div class="list-group list-group-flush border-top">
+                <%var videoIndex = 0;%>
 				<% for (var i = 0; i < matchData.length; i++) { %>
-                    <%if(matchData[i].match_video_flag) {%>
+                    <%if(matchData[i].match_video_count) {%>
                         <div>
-                            <iframe src="<%=matchData[i].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                            <iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
                         </div>
                     <%}%>
                     
