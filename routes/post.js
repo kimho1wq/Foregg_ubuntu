@@ -49,6 +49,10 @@ router.post('/', function(req, res, next) {
     var type = req.body.post_type;
     var writer = req.session.user.uid;
     var video_link = req.body.post_link;
+    var video_count = 1;
+    if(video_link)
+        video_count = 0;
+    
     if(!req.session.user) {
         res.send('<script type="text/javascript">alert("로그인하셔야 합니다.");window.location.href = "/users/login";</script>');
         return;
@@ -66,9 +70,9 @@ router.post('/', function(req, res, next) {
                 message : ''
             };
             
-            var data = [title, content, writer, type];
+            var data = [title, content, writer, type, video_count];
    
-            pool.query('INSERT INTO match_contents (match_title, match_content, match_writer, match_type) VALUES (?,?,?,?)', data , (err, rows) => {
+            pool.query('INSERT INTO match_contents (match_title, match_content, match_writer, match_type, match_video_count) VALUES (?,?,?,?,?)', data , (err, rows) => {
                 if (err) {
                     console.log(err);
                     resultJson.result = false;
@@ -81,10 +85,10 @@ router.post('/', function(req, res, next) {
         },
         function (resultJson, callback) {   
             
-            if(resultJson.result) {
-                var data = [title, content, writer, type];
+            if(resultJson.result && video_link) {
+                var data = [title, content, writer, type, video_count];
    
-                pool.query('SELECT * FROM match_contents WHERE match_title=? AND match_content=? AND match_writer=? AND match_type=? ORDER BY match_create_date DESC', data , (err, rows) => {
+                pool.query('SELECT * FROM match_contents WHERE match_title=? AND match_content=? AND match_writer=? AND match_type=? AND match_video_count=? ORDER BY match_create_date DESC', data , (err, rows) => {
                     if (err) {
                         console.log(err);
                         resultJson.result = false;
@@ -102,7 +106,7 @@ router.post('/', function(req, res, next) {
         },
         function (resultJson, callback) {   
             
-            if(resultJson.result) {
+            if(resultJson.result && video_link) {
                 var data = [resultJson.match_id, video_link];
    
                 pool.query('INSERT INTO match_contents_video (match_video_id, match_video_link) VALUES (?,?)', data , (err, rows) => {

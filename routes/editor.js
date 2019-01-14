@@ -114,18 +114,17 @@ router.get('/',function(req, res, next) {
 		},
         function (resultJson, callback) {
             if(resultJson.result) {
-                    pool.query('SELECT match_id, match_video_link, match_create_date FROM match_contents mc, match_contents_video mcv WHERE mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC', (err, rows) => {
-                        if (err) {
-                            console.log(err);
-                            resultJson.result = false;
-                            resultJson.message = 'DB SELECT ERROR5';
-                            callback(null, resultJson);
-                        } else {
-                            resultJson.match_videoData = rows;
-                            callback(null, resultJson);
-                        }
-                    });
-                }
+                pool.query('SELECT match_id, match_video_link, match_create_date FROM match_contents mc, match_contents_video mcv WHERE mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC', (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR5';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.match_videoData = rows;
+                        callback(null, resultJson);
+                    }
+                });
             } else {
                 callback(null, resultJson);
             }
