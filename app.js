@@ -5,8 +5,11 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
 var mysql = require('mysql');
-var passport = require('passport');
-var flash = require('connect-flash');
+
+//var passport = require('passport');
+//var flash = require('connect-flash');
+//var passport_fb = require('./lib/passport_init');
+//passport_fb(app, passport);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -15,16 +18,16 @@ var editor = require('./routes/editor');
 var post = require('./routes/post');
 var content = require('./routes/content');
 
-var passport_fb = require('./lib/passport_init');
+
 require('./lib/mysql_init');
 require('./lib/firebase_init');
 
 var app = express();
 
 //passport 사용 설정
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+//app.use(passport.initialize());
+//app.use(passport.session());
+//app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,7 +66,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-passport_fb(app, passport);
 
 module.exports = app;
