@@ -15,9 +15,9 @@ var editor = require('./routes/editor');
 var post = require('./routes/post');
 var content = require('./routes/content');
 
+var passport_fb = require('./lib/passport_init');
 require('./lib/mysql_init');
 require('./lib/firebase_init');
-require('./lib/passport_init');
 
 var app = express();
 
@@ -64,5 +64,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+passport_fb(app, passport);
 
 module.exports = app;
