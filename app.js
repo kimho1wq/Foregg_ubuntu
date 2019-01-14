@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
 var mysql = require('mysql');
-
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -16,7 +17,14 @@ var content = require('./routes/content');
 
 require('./lib/mysql_init');
 require('./lib/firebase_init');
+require('./lib/passport_init');
+
 var app = express();
+
+//passport 사용 설정
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

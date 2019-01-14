@@ -302,6 +302,16 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
     }); 
 });
 
+// 패스포트 - 페이스북 인증 라우팅
+router.get('/facebook', passport.authenticate('facebook', {
+  authType: 'rerequest', scope: ['public_profile', 'email']
+}));
+
+// 패스포트 - 페이스북 인증 콜백 라우팅
+router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), function(req, res) {
+    res.redirect('/');
+});
+
 router.post('/login_fb', function (req, res) {
     console.log('/fb login post pass request.');
     
