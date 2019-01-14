@@ -45,7 +45,7 @@ router.post('/', function(req, res, next) {
             var resultJson = {
                 result : true,
                 message : '',
-                match_data
+                match_data: null
             };
             
             pool.query('SELECT match_id, match_video_count FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {

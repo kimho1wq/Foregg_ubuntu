@@ -35,14 +35,11 @@
 			<div>
 				<!-- TODO: List here -->
 				<div class="list-group list-group-flush border-top">
-                <%var videoIndex = 0;%>
+                <% var videoIndex = 0; %>
 				<% for (var i = 0; i < matchData.length; i++) { %>
-                    <%if(matchData[i].match_video_count) {%>
-                        <div>
-                            <iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
-                        </div>
-                    <%}%>
-                    
+                    <% if(matchData[i].match_video_count) {%>
+                        <iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>    
+                    <% } %>
 					<a class="list-group-item list-group-item-action d-flex" href="/content?id=<%=matchData[i].match_id%>">               
 						<div class="col-18 p-0">
 							<h6 class="m-0"><span class="badge badge-primary mr-1"><%=matchData[i].type_name%></span><%=matchData[i].match_title%></h6>
