@@ -36,5 +36,38 @@ router.get('/',function(req, res, next) {
     });
 });
 
+router.post('/', function(req, res, next) {
+    console.log('/content post pass request.');
+    var content_id = req.query.id;
+    
+    async.waterfall([
+		function (callback) {
+            var resultJson = {
+                result : true,
+                message : ''   
+            };
+            
+            pool.query('DELETE FROM match_contents WHERE match_id = ?', [content_id], (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = '글 정보를 찾지 못하였습니다.';
+                    callback(null, resultJson);
+                } else {
+                    resultJson.matchData = rows[0];
+                    callback(null, resultJson);
+                }
+            });    
+		}
+	],
+    function (callback, resultJson) {
+        if(resultJson.result) { 
+            res.send('<script type="text/javascript">alert("삭제 되었습니다.");window.location.href = "/editor";</script>');
+        } else {
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/join";</script>');
+        }
+    });
+});
+
 
 module.exports = router;
