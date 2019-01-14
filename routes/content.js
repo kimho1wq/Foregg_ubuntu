@@ -30,7 +30,7 @@ router.get('/',function(req, res, next) {
         function (resultJson, callback) {
             
              if(resultJson.result) {
-                pool.query('SELECT match_id, match_video_link, match_create_date FROM match_contents mc, match_contents_video mcv WHERE mc.match_id = ? AND mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC', [content_id] (err, rows) => {
+                pool.query('SELECT match_id, match_video_link, match_create_date FROM match_contents mc, match_contents_video mcv WHERE mc.match_id = ? AND mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC', [content_id], (err, rows) => {
                     if (err) {
                         console.log(err);
                         resultJson.result = false;
