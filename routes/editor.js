@@ -74,7 +74,7 @@ router.get('/',function(req, res, next) {
                 var limitPage = 5;
                 var limitSize = 10;
                 
-                pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct WHERE mc.match_writer = u.user_uid AND mc.match_type = mct.type ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
+                pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct, match_contents_video mcv WHERE mc.match_writer = u.user_uid AND mc.match_type = mct.type AND mc.match_id = mcv.match_video_id ORDER BY match_create_date DESC LIMIT ?, ?', [(page-1)*limitSize, limitSize], (err, rows) => {
                     if (err) {
                         console.log(err);
                         resultJson.result = false;

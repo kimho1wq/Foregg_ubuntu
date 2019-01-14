@@ -84,7 +84,7 @@ router.post('/', function(req, res, next) {
             if(resultJson.result) {
                 var data = [title, content, writer, type];
    
-                pool.query('SELECT * FROM match_contents WHERE match_title=?, match_content=?, match_writer=?, match_type=? ORDER BY match_create_date DESC', data , (err, rows) => {
+                pool.query('SELECT * FROM match_contents WHERE match_title=? AND match_content=? AND match_writer=? AND match_type=? ORDER BY match_create_date DESC', data , (err, rows) => {
                     if (err) {
                         console.log(err);
                         resultJson.result = false;
@@ -92,8 +92,6 @@ router.post('/', function(req, res, next) {
                         callback(null, resultJson);
                     } else {
                         resultJson.match_id = rows[0].match_id;
-                        console.log('rows[0]:'+rows[0]);
-                        console.log('rows[0].match_id:'+rows[0].match_id);
                         callback(null, resultJson);
                     }
                 });
