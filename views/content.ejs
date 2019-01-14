@@ -33,6 +33,12 @@
 					</p>
 					<p class="col-6 p-0 m-0 text-right"><%=matchData.match_create_date%></p>
 				</div>
+                <% var videoIndex = 0; %>
+                <%if(matchData.match_video_count) {%>
+                <div>
+                    <iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                </div>
+                <%}%>
 			</div>
 			<hr>
 			<p>
