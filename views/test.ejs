@@ -13,28 +13,18 @@ limitations under the License.
 -->
 <html>
 <head>
-  <meta charset=utf-8 />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phone Authentication with invisible ReCaptcha</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>ForEgg - TEST</title>
 
-  <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-
-  <link rel="stylesheet" href="main.css">
-</head>
+		<!-- CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/product.css" rel="stylesheet">
+	</head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-  <!-- Header section containing title -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
-        <a href="/"><h3>Firebase Authentication</h3></a>
-      </div>
-    </div>
-  </header>
 
   <main class="mdl-layout__content mdl-color--grey-100">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
@@ -42,16 +32,16 @@ limitations under the License.
       <!-- Container for the demo -->
       <div id="sign-in-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">Phone number authentication with invisible ReCaptcha</h2>
+          <h2 class="mdl-card__title-text">핸드폰 번호 인증 with invisible ReCaptcha</h2>
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <p>Sign in with your phone number below.</p>
+          <p>핸드폰 인증하기</p>
 
           <form id="sign-in-form" action="#">
             <!-- Input to enter the phone number -->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" pattern="\+[0-9\s\-\(\)]+" id="phone-number">
-              <label class="mdl-textfield__label" for="phone-number">Enter your phone number...</label>
+              <label class="mdl-textfield__label" for="phone-number">핸드폰 번호를 입력하세요</label>
               <span class="mdl-textfield__error">Input is not an international phone number!</span>
             </div>
 
@@ -66,7 +56,7 @@ limitations under the License.
             <!-- Input to enter the verification code -->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="verification-code">
-              <label class="mdl-textfield__label" for="verification-code">Enter the verification code...</label>
+              <label class="mdl-textfield__label" for="verification-code">인증 번호를 입력하세요</label>
             </div>
 
             <!-- Button that triggers code verification -->
@@ -130,6 +120,8 @@ limitations under the License.
         var displayName = user.displayName;
         var providerData = user.providerData;
         var emailVerified = user.emailVerified;
+        console.log('user:'+user.uid);
+          
       }
       updateSignInButtonUI();
       updateSignInFormUI();
@@ -163,36 +155,23 @@ limitations under the License.
    * Function called when clicking the Login/Logout button.
    */
   function onSignInSubmit() {
+      console.log('onSignInSubmit');
     if (isPhoneNumberValid()) {
       window.signingIn = true;
       updateSignInButtonUI();
       var phoneNumber = getPhoneNumberFromUserInput();
       var appVerifier = window.recaptchaVerifier;
-      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-          .then(function (confirmationResult) {
-            // SMS sent. Prompt user to type the code from the message, then sign the
-            // user in with confirmationResult.confirm(code).
-            window.confirmationResult = confirmationResult;
-            window.signingIn = false;
+        window.signingIn = false;
             updateSignInButtonUI();
             updateVerificationCodeFormUI();
             updateVerifyCodeButtonUI();
-            updateSignInFormUI();
-          }).catch(function (error) {
-            // Error; SMS not sent
-            console.error('Error during signInWithPhoneNumber', error);
-            window.alert('Error during signInWithPhoneNumber:\n\n'
-                + error.code + '\n\n' + error.message);
-            window.signingIn = false;
-            updateSignInFormUI();
-            updateSignInButtonUI();
-          });
     }
   }
   /**
    * Function called when clicking the "Verify Code" button.
    */
   function onVerifyCodeSubmit(e) {
+       console.log('onVerifyCodeSubmit');
     e.preventDefault();
     if (!!getCodeFromUserInput()) {
       window.verifyingCode = true;
@@ -219,6 +198,7 @@ limitations under the License.
    * Cancels the verification code input.
    */
   function cancelVerification(e) {
+      console.log('cancelVerification');
     e.preventDefault();
     window.confirmationResult = null;
     updateVerificationCodeFormUI();
@@ -228,24 +208,28 @@ limitations under the License.
    * Signs out the user when the sign-out button is clicked.
    */
   function onSignOutClick() {
+      console.log('onSignOutClick');
     firebase.auth().signOut();
   }
   /**
    * Reads the verification code from the user input.
    */
   function getCodeFromUserInput() {
+      console.log('getCodeFromUserInput');
     return document.getElementById('verification-code').value;
   }
   /**
    * Reads the phone number from the user input.
    */
   function getPhoneNumberFromUserInput() {
+      console.log('getPhoneNumberFromUserInput');
     return document.getElementById('phone-number').value;
   }
   /**
    * Returns true if the phone number is valid.
    */
   function isPhoneNumberValid() {
+      console.log('isPhoneNumberValid');
     var pattern = /^\+[0-9\s\-\(\)]+$/;
     var phoneNumber = getPhoneNumberFromUserInput();
     return phoneNumber.search(pattern) !== -1;
@@ -254,6 +238,7 @@ limitations under the License.
    * Re-initializes the ReCaptacha widget.
    */
   function resetReCaptcha() {
+      console.log('resetReCaptcha');
     if (typeof grecaptcha !== 'undefined'
         && typeof window.recaptchaWidgetId !== 'undefined') {
       grecaptcha.reset(window.recaptchaWidgetId);
@@ -263,6 +248,7 @@ limitations under the License.
    * Updates the Sign-in button state depending on ReCAptcha and form values state.
    */
   function updateSignInButtonUI() {
+      console.log('updateSignInButtonUI');
     document.getElementById('sign-in-button').disabled =
         !isPhoneNumberValid()
         || !!window.signingIn;
@@ -271,6 +257,7 @@ limitations under the License.
    * Updates the Verify-code button state depending on form values state.
    */
   function updateVerifyCodeButtonUI() {
+      console.log('updateVerifyCodeButtonUI');
     document.getElementById('verify-code-button').disabled =
         !!window.verifyingCode
         || !getCodeFromUserInput();
@@ -279,6 +266,7 @@ limitations under the License.
    * Updates the state of the Sign-in form.
    */
   function updateSignInFormUI() {
+      console.log('updateSignInFormUI');
     if (firebase.auth().currentUser || window.confirmationResult) {
       document.getElementById('sign-in-form').style.display = 'none';
     } else {
@@ -290,6 +278,7 @@ limitations under the License.
    * Updates the state of the Verify code form.
    */
   function updateVerificationCodeFormUI() {
+      console.log('updateVerificationCodeFormUI');
     if (!firebase.auth().currentUser && window.confirmationResult) {
       document.getElementById('verification-code-form').style.display = 'block';
     } else {
@@ -300,6 +289,7 @@ limitations under the License.
    * Updates the state of the Sign out button.
    */
   function updateSignOutButtonUI() {
+      console.log('updateSignOutButtonUI');
     if (firebase.auth().currentUser) {
       document.getElementById('sign-out-button').style.display = 'block';
     } else {
@@ -310,6 +300,7 @@ limitations under the License.
    * Updates the Signed in user status panel.
    */
   function updateSignedInUserStatusUI() {
+      console.log('updateSignedInUserStatusUI');
     var user = firebase.auth().currentUser;
     if (user) {
       document.getElementById('sign-in-status').textContent = 'Signed in';
