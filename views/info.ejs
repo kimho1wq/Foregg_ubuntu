@@ -23,19 +23,20 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
 			</form>
-            <form action="/users/info/phone" method="post">
+            <form id="sign-in-form" action="#">
 				<hr class="my-4">
 				<div class="form-group">
                     <p>핸드폰 번호</p>
-                    <input type="text" class="form-control-file" id="profile_phone" name="profile_phone">
+                    <input type="text" class="form-control" id="profile_phone" name="profile_phone">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">인증번호 받기</button>
+                <button type="submit" class="btn btn-primary btn-block" id="sign-in-button">인증번호 받기</button>
 			</form>
-            <form action="/users/info/phone_v" method="post">
+            
+            <form id="verification-code-form" action="#">
 				<hr class="my-4">
 				<div class="form-group">
                     <p>핸드폰 인증 번호</p>
-                    <input type="text" class="form-control-file" id="profile_phone_v" name="profile_phone_v">
+                    <input type="text" class="form-control" id="profile_phone_v" name="profile_phone_v">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">핸드폰 번호 인증하기</button>
 			</form>
@@ -57,16 +58,75 @@
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="../js/jquery-3.3.1.min.js"></script>
 		<script src="../js/bootstrap.bundle.min.js"></script>
-		<script>
-			$(window).bind('beforeunload', function() { return null; });
-			$(document).ready(function()
-			{
-				$("form").on("submit", function (e)
-				{
-					$(window).off("beforeunload");
-					return true;
-				});
-			});
-		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
+        <script>
+            var config = {
+                apiKey: "AIzaSyBK-JY3h8Hj4dH-qTJtTmmiew4zE8U9hC4",
+                authDomain: "foregg-8e50f.firebaseapp.com",
+                databaseURL: "https://foregg-8e50f.firebaseio.com",
+                projectId: "foregg-8e50f",
+                storageBucket: "foregg-8e50f.appspot.com",
+                messagingSenderId: "530431911120"
+            };
+            firebase.initializeApp(config);
+        </script>
+        <script type="text/javascript">
+            window.onload = function() {
+                // Listening for auth state changes.
+                firebase.auth().onAuthStateChanged(function(user) {
+                    if (user) {
+                        // User is signed in.
+                        var uid = user.uid;
+                        var email = user.email;
+                        var phone = user.phone;
+                    }
+                });
+                
+    // [START appVerifier]
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      'size': 'invisible',
+      'callback': function(response) {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        onSignInSubmit();
+      }
+    });
+    // [END appVerifier]
+    recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+      updateSignInButtonUI();
+    });
+  };
+            
+            function onSignInSubmit() {console.log("onSignInSubmit");
+    if (isPhoneNumberValid()) {
+      window.signingIn = true;
+      updateSignInButtonUI();
+      var phoneNumber = getPhoneNumberFromUserInput();
+      var appVerifier = window.recaptchaVerifier;
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then(function (confirmationResult) {
+            // SMS sent. Prompt user to type the code from the message, then sign the
+            // user in with confirmationResult.confirm(code).
+            window.confirmationResult = confirmationResult;
+            window.signingIn = false;
+            updateSignInButtonUI();
+            updateVerificationCodeFormUI();
+            updateVerifyCodeButtonUI();
+            updateSignInFormUI();
+          }).catch(function (error) {
+            // Error; SMS not sent
+            console.error('Error during signInWithPhoneNumber', error);
+            window.alert('Error during signInWithPhoneNumber:\n\n'
+                + error.code + '\n\n' + error.message);
+            window.signingIn = false;
+            updateSignInFormUI();
+            updateSignInButtonUI();
+          });
+    }
+  }
+            
+        </script>
 	</body>
 </html>
