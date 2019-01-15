@@ -26,6 +26,7 @@
             
             <form action="/users/info/phone" method="post" id="phone-verification">
                 <input type="hidden" class="form-control" id="phone-number-info" name="phone-number-info" value="<%=login.phone%>">
+                <input type="hidden" class="form-control" id="formControlValue" name="formControlValue" value="1">
             </form>
             
             <form id="sign-in-form" action="#">
@@ -79,8 +80,9 @@
         </script>
         
         <script type="text/javascript">
-              function profilePicture() {
-                  if(document.getElementById('profile_picture').value) {
+              function onVerifyProfilePictureSubmit() {
+                  var val = document.getElementById('profile_picture').value;
+                  if(val) {
                       document.getElementById('profile-change').submit();
                   } else {
                       window.alert('프로필 사진을 선택해 주십시오.');
@@ -91,13 +93,12 @@
             /**
             * Set up UI event listeners and registering Firebase auth listeners.
             */
-            var formControlValue = true;
             window.onload = function() {
                 updateSignInButtonUI();
-                updateSignInFormUI();
+                updateSignInFormUI(true);
                 //updateSignOutButtonUI();
                 //updateSignedInUserStatusUI();
-                updateVerificationCodeFormUI();
+                updateVerificationCodeFormUI(false);
              
                 // Event bindings.
                 //document.getElementById('sign-out-button').addEventListener('click', onSignOutClick);
@@ -106,6 +107,7 @@
                 document.getElementById('verification-code').addEventListener('keyup', updateVerifyCodeButtonUI);
                 document.getElementById('verification-code').addEventListener('change', updateVerifyCodeButtonUI);
                 document.getElementById('verification-code-form').addEventListener('submit', onVerifyCodeSubmit);
+                document.getElementById('profile-change').addEventListener('submit', onVerifyProfilePictureSubmit);
                 //document.getElementById('cancel-verify-code-button').addEventListener('click', cancelVerification);
                 
                 // [START appVerifier]
@@ -138,18 +140,16 @@
                         // user in with confirmationResult.confirm(code).
                         window.confirmationResult = confirmationResult;
                         window.signingIn = false;
-                        formControlValue = false;
+                        updateSignInFormUI(false);
                         updateSignInButtonUI();
-                        updateVerificationCodeFormUI();
+                        updateVerificationCodeFormUI(true);
                         updateVerifyCodeButtonUI();
-                        updateSignInFormUI();
                     }).catch(function (error) {
                         // Error; SMS not sent
                         console.error('Error during signInWithPhoneNumber', error);
                         window.alert('Error during signInWithPhoneNumber:\n\n'
                                      + error.code + '\n\n' + error.message);
                         window.signingIn = false;
-                        updateSignInFormUI();
                         updateSignInButtonUI();
                     });
                 } else {
@@ -170,9 +170,8 @@
                         // User signed in successfully.
                         window.verifyingCode = false;
                         window.confirmationResult = null;
-                        formControlValue = true;
-                        updateVerificationCodeFormUI();
-                        updateSignInFormUI();
+                        updateVerificationCodeFormUI(false);
+                        updateSignInFormUI(true);
                         document.getElementById('phone-verification').submit();
                     }).catch(function (error) {
                         // User couldn't sign in (bad verification code?)
@@ -275,7 +274,7 @@
             /**
             * Updates the state of the Sign-in form.
             */
-            function updateSignInFormUI() {
+            function updateSignInFormUI(formControlValue) {
                 console.log("updateSignInFormUI");
                 if (formControlValue) {
                     document.getElementById('sign-in-form').style.display = 'block';
@@ -287,12 +286,12 @@
             /**
             * Updates the state of the Verify code form.
             */
-            function updateVerificationCodeFormUI() {
+            function updateVerificationCodeFormUI(formControlValue) {
                 console.log("updateVerificationCodeFormUI");
                 if (formControlValue) {
-                    document.getElementById('verification-code-form').style.display = 'none';
-                } else {
                     document.getElementById('verification-code-form').style.display = 'block';
+                } else {
+                    document.getElementById('verification-code-form').style.display = 'none';
                 }
             }
             /**
