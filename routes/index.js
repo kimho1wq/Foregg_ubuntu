@@ -8,7 +8,7 @@ router.get('/',function(req, res, next) {
     var page = req.query.page;
     if(!page) page = 1;
     
-    async.waterfall([
+    /*async.waterfall([
 		function (callback) {
             
             var resultJson = {
@@ -118,9 +118,9 @@ router.get('/',function(req, res, next) {
         } else {
             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "error";</script>');
         }
-    });
+    });*/
     
-    // res.render('index', { login : req.session.user });
+     res.render('test', { login : req.session.user });
 });
 
 
