@@ -24,7 +24,9 @@
                 <button type="submit" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
 			</form>
             
-            <form action="/users/info/phone" method="post" id="phone-verification"></form>
+            <form action="/users/info/phone" method="post" id="phone-verification">
+                <input type="hidden" class="form-control" id="phone-number-info" name="phone-number-info" value="<%=login.phone%>">
+            </form>
             
             <form id="sign-in-form" action="#">
 				<hr class="my-4">
@@ -41,7 +43,7 @@
                     <label for="verification-code">인증번호</label>
                     <input type="text" class="form-control" id="verification-code" name="verification-code">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block" id="verify-code-button">인증하기</button>
+                <button type="submit" class="btn btn-primary btn-block" id="verify-code-button">확인</button>
 			</form>
             <!--<form action="/users/info" method="post">
                 <div class="form-group">
@@ -157,7 +159,7 @@
                         window.verifyingCode = false;
                         window.confirmationResult = null;
                         updateVerificationCodeFormUI();
-                        document.getElementById('sign-in-form').style.display = 'block';
+                        updateSignInFormUI();
                         document.getElementById('phone-verification').submit();
                     }).catch(function (error) {
                         // User couldn't sign in (bad verification code?)
@@ -205,14 +207,22 @@
                 return str; 
             }
             /**
+            * Reads the phone number from the user info.
+            */
+            function getPhoneNumberFromUserInfo() {
+                console.log("getPhoneNumberFromUserInfo");
+                return document.getElementById('phone-number-info').value;
+            }
+            /**
             * Returns true if the phone number is valid.
             */
             function isPhoneNumberValid() {
                 console.log("isPhoneNumberValid");
                 //var pattern = /^\+[0-9\s\-\(\)]+$/;
                 
-                var phoneNumber = getPhoneNumberFromUserInput();
-                if(phoneNumber == login.phone)
+                var phoneNumberInput = getPhoneNumberFromUserInput();
+                var phoneNumberInfo = getPhoneNumberFromUserInfo();
+                if(phoneNumberInput == phoneNumberInfo)
                     return true;
                 else
                     return false;
