@@ -23,6 +23,22 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
 			</form>
+            <form action="/users/info/phone" method="post">
+				<hr class="my-4">
+				<div class="form-group">
+                    <p>핸드폰 번호</p>
+                    <input type="text" class="form-control-file" id="profile_phone" name="profile_phone">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">인증번호 받기</button>
+			</form>
+            <form action="/users/info/phone_v" method="post">
+				<hr class="my-4">
+				<div class="form-group">
+                    <p>핸드폰 인증 번호</p>
+                    <input type="text" class="form-control-file" id="profile_phone_v" name="profile_phone_v">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">핸드폰 번호 인증하기</button>
+			</form>
             <!--<form action="/users/info" method="post">
                 <div class="form-group">
                     <label for="join_nickname">닉네임</label>
