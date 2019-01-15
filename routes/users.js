@@ -302,67 +302,6 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
     }); 
 });
 
-router.post('/info/phone', function (req, res) {
-    console.log('/info/phone post pass request.');
-    var phoneNumber = req.body.profile_phone;
-    
-    console.log('phone n : '+phoneNumber);
-    firebase.auth().languageCode = 'it';
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-        'size': 'invisible',
-        'callback': function(response) {
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            onSignInSubmit(phoneNumber);
-        }
-    });
-    
-    
-    console.log('grecaptcha');
-    grecaptcha.reset(window.recaptchaWidgetId);
-
-    console.log('window.render');
-    // Or, if you haven't stored the widget ID:
-    window.recaptchaVerifier.render().then(function(widgetId) {
-        grecaptcha.reset(widgetId);
-    });
-                                           
-   console.log('end???');
-});
-function onSignInSubmit(phoneNumber) {
-    console.log('onSign function');
-    var appVerifier = window.recaptchaVerifier;
-    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier).then(function (confirmationResult) {n
-        console.log('confirmatiomResult');
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
-    }).catch(function (error) {
-        console.log('error111 : ' + error);
-        // Error; SMS not sent
-        // ...
-    });
-    
-    
-}
-router.post('/info/phone_v', function (req, res) {
-    console.log('/info/phone_v post pass request.');
-                              
-    var code = req.body.profile_phone_v;
-    console.log('code : '+code);
-    confirmationResult.confirm(code).then(function (result) {
-        // User signed in successfully.
-        console.log('result: '+result);
-        var user = result.user;
-        // ...
-    }).catch(function (error) {
-        console.log('error222 : ' + error);
-        // User couldn't sign in (bad verification code?)
-        // ...
-    });
-    
-    
-});
-
 
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();

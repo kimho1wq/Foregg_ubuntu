@@ -62,17 +62,6 @@
 		<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
-        <script>
-            var config = {
-                apiKey: "AIzaSyBK-JY3h8Hj4dH-qTJtTmmiew4zE8U9hC4",
-                authDomain: "foregg-8e50f.firebaseapp.com",
-                databaseURL: "https://foregg-8e50f.firebaseio.com",
-                projectId: "foregg-8e50f",
-                storageBucket: "foregg-8e50f.appspot.com",
-                messagingSenderId: "530431911120"
-            };
-            firebase.initializeApp(config);
-        </script>
         <script type="text/javascript">
             /**
             * Set up UI event listeners and registering Firebase auth listeners.
@@ -85,8 +74,9 @@
                         var uid = user.uid;
                         var email = user.email;
                         var phone = user.phone;
+                        console.log(user.uid,user.email,user.phone);
                     }
-                    console.log(uid,email,phone);
+                    
                     updateSignInButtonUI();
                     updateSignInFormUI();
                     //updateSignOutButtonUI();
@@ -160,9 +150,11 @@
                     confirmationResult.confirm(code).then(function (result) {
                         // User signed in successfully.
                         var user = result.user;
+                        console.log('user:' + user);
                         window.verifyingCode = false;
                         window.confirmationResult = null;
                         updateVerificationCodeFormUI();
+                        document.getElementById('sign-in-form').style.display = 'block';
                     }).catch(function (error) {
                         // User couldn't sign in (bad verification code?)
                         console.error('Error while checking the verification code', error);
