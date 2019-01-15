@@ -38,10 +38,10 @@
             <form id="verification-code-form" action="#">
 				<hr class="my-4">
 				<div class="form-group">
-                    <label for="verification-code">핸드폰 인증 번호</label>
+                    <label for="verification-code">인증번호</label>
                     <input type="text" class="form-control" id="verification-code" name="verification-code">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block" id="verify-code-button">핸드폰 번호 인증하기</button>
+                <button type="submit" class="btn btn-primary btn-block" id="verify-code-button">인증하기</button>
 			</form>
             <!--<form action="/users/info" method="post">
                 <div class="form-group">
@@ -138,6 +138,8 @@
                         updateSignInFormUI();
                         updateSignInButtonUI();
                     });
+                } else {
+                    window.alert('회원 정보의 번호와 일치하지 않습니다.');
                 }
             }
             /**
@@ -207,10 +209,14 @@
             */
             function isPhoneNumberValid() {
                 console.log("isPhoneNumberValid");
-                return true;
-                var pattern = /^\+[0-9\s\-\(\)]+$/;
+                //var pattern = /^\+[0-9\s\-\(\)]+$/;
+                
                 var phoneNumber = getPhoneNumberFromUserInput();
-                return phoneNumber.search(pattern) !== -1;
+                if(phoneNumber == login.phone)
+                    return true;
+                else
+                    return false;
+                //return phoneNumber.search(pattern) !== -1;
             }
             /**
             * Re-initializes the ReCaptacha widget.
