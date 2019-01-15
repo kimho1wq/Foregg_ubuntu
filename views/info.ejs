@@ -24,6 +24,8 @@
                 <button type="submit" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
 			</form>
             
+            <form action="/users/info/phone" method="post" id="phone-verification"></form>
+            
             <form id="sign-in-form" action="#">
 				<hr class="my-4">
 				<div class="form-group">
@@ -78,22 +80,12 @@
             * Set up UI event listeners and registering Firebase auth listeners.
             */
             window.onload = function() {
-                // Listening for auth state changes.
-                firebase.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        // User is signed in.
-                        var uid = user.uid;
-                        var email = user.email;
-                        var phone = user.phone;
-                        console.log(user.uid,user.email,user.phone);
-                    }
-                    
-                    updateSignInButtonUI();
-                    updateSignInFormUI();
-                    //updateSignOutButtonUI();
-                    //updateSignedInUserStatusUI();
-                    updateVerificationCodeFormUI();
-                });
+                updateSignInButtonUI();
+                updateSignInFormUI();
+                //updateSignOutButtonUI();
+                //updateSignedInUserStatusUI();
+                updateVerificationCodeFormUI();
+             
                 // Event bindings.
                 //document.getElementById('sign-out-button').addEventListener('click', onSignOutClick);
                 document.getElementById('phone-number').addEventListener('keyup', updateSignInButtonUI);
@@ -160,12 +152,11 @@
                     var code = getCodeFromUserInput();
                     confirmationResult.confirm(code).then(function (result) {
                         // User signed in successfully.
-                        var user = result.user;
-                        console.log('user:' + user);
                         window.verifyingCode = false;
                         window.confirmationResult = null;
                         updateVerificationCodeFormUI();
                         document.getElementById('sign-in-form').style.display = 'block';
+                        document.getElementById('phone-verification').submit();
                     }).catch(function (error) {
                         // User couldn't sign in (bad verification code?)
                         console.error('Error while checking the verification code', error);
@@ -206,7 +197,10 @@
             */
             function getPhoneNumberFromUserInput() {
                 console.log("getPhoneNumberFromUserInput");
-                return document.getElementById('phone-number').value;
+                var rawValue = document.getElementById('phone-number').value;
+                var str = '+82' + rawValue.substring(1,rawValue.length);
+                console.log(str);
+                return str; 
             }
             /**
             * Returns true if the phone number is valid.
@@ -251,7 +245,7 @@
             */
             function updateSignInFormUI() {
                 console.log("updateSignInFormUI");
-                if (firebase.auth().currentUser || window.confirmationResult) {
+                if (window.confirmationResult) {
                     document.getElementById('sign-in-form').style.display = 'none';
                 } else {
                     resetReCaptcha();
@@ -263,7 +257,7 @@
             */
             function updateVerificationCodeFormUI() {
                 console.log("updateVerificationCodeFormUI");
-                if (!firebase.auth().currentUser && window.confirmationResult) {
+                if (window.confirmationResult) {
                     document.getElementById('verification-code-form').style.display = 'block';
                 } else {
                     document.getElementById('verification-code-form').style.display = 'none';

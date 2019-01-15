@@ -227,7 +227,8 @@ router.post('/login', function (req, res) {
                             email: rows[0].user_email,
                             nickname: rows[0].user_nickname,
                             type: rows[0].user_type,
-                            phone: rows[0].user_phone
+                            phone: rows[0].user_phone,
+                            phone_verify: rows[0].user_phone_verify
                         };
                         callback(null, resultJson);
                     }
@@ -302,6 +303,39 @@ router.post('/info', upload.single('profile_picture'), function (req, res) {
     }); 
 });
 
+router.post('/info/phone', function (req, res) {
+    console.log('/info/phone post pass request.');
+    var sess = req.session.user;
+    
+    async.waterfall([    
+        function (callback) {
+            var resultJson = {
+                result : true,
+                message : ''
+            };
+                    
+            var data = [sess.uid];
+            pool.query("UPDATE users SET user_phone_verify = 1 WHERE user_uid = ?", data, (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = '회원 정보 삽입 오류';
+                    callback(null, resultJson);
+                } else {
+                    sess.phone_verify = 1;
+                    callback(null, resultJson);
+                }
+            });
+        }
+    ],
+    function (callback, resultJson) {
+         if(resultJson.result){
+             res.send('<script type="text/javascript">alert("회원 정보 (핸드폰 인증) 수정 완료");window.location.href = "/";</script>');
+         } else {
+             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/users/info";</script>');  
+         }
+    }); 
+});
 
 // To apply the default browser preference instead of explicitly setting it.
 // firebase.auth().useDeviceLanguage();
