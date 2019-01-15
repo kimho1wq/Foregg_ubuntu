@@ -21,7 +21,7 @@
                     <label for="profile_picture">프로필 사진 선택</label>
                     <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
                 </div>
-                <button onclick="profilePicture()" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
+                <button onclick="onVerifyProfilePictureSubmit()" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
 			</form>
             
             <form action="/users/info/phone" method="post" id="phone-verification">
@@ -78,17 +78,6 @@
             };
             firebase.initializeApp(config);
         </script>
-        
-        <script type="text/javascript">
-              function onVerifyProfilePictureSubmit() {
-                  var val = document.getElementById('profile_picture').value;
-                  if(val) {
-                      document.getElementById('profile-change').submit();
-                  } else {
-                      window.alert('프로필 사진을 선택해 주십시오.');
-                  }
-              }
-        </script>
         <script type="text/javascript">
             /**
             * Set up UI event listeners and registering Firebase auth listeners.
@@ -107,7 +96,6 @@
                 document.getElementById('verification-code').addEventListener('keyup', updateVerifyCodeButtonUI);
                 document.getElementById('verification-code').addEventListener('change', updateVerifyCodeButtonUI);
                 document.getElementById('verification-code-form').addEventListener('submit', onVerifyCodeSubmit);
-                document.getElementById('profile-change').addEventListener('submit', onVerifyProfilePictureSubmit);
                 //document.getElementById('cancel-verify-code-button').addEventListener('click', cancelVerification);
                 
                 // [START appVerifier]
@@ -182,6 +170,7 @@
                         updateSignInButtonUI();
                         updateVerifyCodeButtonUI();
                     });
+                }
             }
             /**
             * Cancels the verification code input.
@@ -319,6 +308,16 @@
                     document.getElementById('account-details').textContent = 'null';
                 }
             }*/
+            function onVerifyProfilePictureSubmit() {
+                var val = document.getElementById('profile_picture').value;
+                if(val) {
+                    console.log('val not null:'+val);
+                    document.getElementById('profile-change').submit();
+                } else {
+                    console.log('val null:'+val);
+                    window.alert('프로필 사진을 선택해 주십시오.');
+                }
+            }
         </script>
 	</body>
 </html>
