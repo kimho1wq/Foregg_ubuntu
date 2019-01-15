@@ -15,13 +15,13 @@
 			<img class="mb-5" src="../img/cs256.png" alt="" width="96" height="96">
 			<h3 class="mb-3 font-weight-normal">USER INFO</h3>
 			
-            <form action="/users/info" method="post" enctype="multipart/form-data">
+            <form action="/users/info" method="post" enctype="multipart/form-data" id="profile-change">
 				<hr class="my-4">
 				<div class="form-group">
-                    <p>프로필 사진 선택</p>
+                    <label for="profile_picture">프로필 사진 선택</label>
                     <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
+                <button onclick="profilePicture()" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
 			</form>
             
             <form action="/users/info/phone" method="post" id="phone-verification">
@@ -63,7 +63,7 @@
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="../js/jquery-3.3.1.min.js"></script>
 		<script src="../js/bootstrap.bundle.min.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
         <script>
@@ -76,6 +76,17 @@
                 messagingSenderId: "530431911120"
             };
             firebase.initializeApp(config);
+        </script>
+        
+        <script type="text/javascript">
+              function profilePicture() {
+                  var val = document.getElementById('profile_picture').value;
+                  if(val) {
+                      document.getElementById('profile-change').submit();
+                  } else {
+                      window.alert('프로필 사진을 선택해 주십시오.');
+                  }
+              }
         </script>
         <script type="text/javascript">
             /**
@@ -207,26 +218,30 @@
                 return str; 
             }
             /**
-            * Reads the phone number from the user info.
-            */
-            function getPhoneNumberFromUserInfo() {
-                console.log("getPhoneNumberFromUserInfo");
-                return document.getElementById('phone-number-info').value;
-            }
-            /**
             * Returns true if the phone number is valid.
             */
             function isPhoneNumberValid() {
                 console.log("isPhoneNumberValid");
                 //var pattern = /^\+[0-9\s\-\(\)]+$/;
                 
-                var phoneNumberInput = getPhoneNumberFromUserInput();
-                var phoneNumberInfo = getPhoneNumberFromUserInfo();
+                var phoneNumberInput = document.getElementById('phone-number').value;
+                var phoneNumberInfo = document.getElementById('phone-number-info').value;
                 if(phoneNumberInput == phoneNumberInfo)
                     return true;
                 else
                     return false;
                 //return phoneNumber.search(pattern) !== -1;
+            }
+            /**
+            * Returns true if the phone number is valid.
+            */
+            function isPhoneNumberLengthValid() {
+                console.log("isPhoneNumberLengthValid");
+                var phoneNumberInput = document.getElementById('phone-number').value;
+                if(phoneNumberInput.length == 11)
+                    return true;
+                else
+                    return false;
             }
             /**
             * Re-initializes the ReCaptacha widget.
@@ -244,7 +259,7 @@
             function updateSignInButtonUI() {
                 console.log("updateSignInButtonUI");
                 document.getElementById('sign-in-button').disabled =
-                    !isPhoneNumberValid()
+                    !isPhoneNumberLengthValid()
                 || !!window.signingIn;
             }
             /**
