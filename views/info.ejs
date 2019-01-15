@@ -21,7 +21,7 @@
                     <label for="profile_picture">프로필 사진 선택</label>
                     <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
                 </div>
-                <button onclick="onVerifyProfilePictureSubmit()" class="btn btn-primary btn-block">프로필 사진 수정하기</button>
+                <button type="submit" class="btn btn-primary btn-block" id="profile-change-button">프로필 사진 수정하기</button>
 			</form>
             
             <form action="/users/info/phone" method="post" id="phone-verification">
@@ -96,6 +96,7 @@
                 document.getElementById('verification-code').addEventListener('keyup', updateVerifyCodeButtonUI);
                 document.getElementById('verification-code').addEventListener('change', updateVerifyCodeButtonUI);
                 document.getElementById('verification-code-form').addEventListener('submit', onVerifyCodeSubmit);
+                document.getElementById('profile_picture').addEventListener('change', updateProfileChangeButtonUI);
                 //document.getElementById('cancel-verify-code-button').addEventListener('click', cancelVerification);
                 
                 // [START appVerifier]
@@ -308,14 +309,15 @@
                     document.getElementById('account-details').textContent = 'null';
                 }
             }*/
-            function onVerifyProfilePictureSubmit() {
+            function updateProfileChangeButtonUI() {
+                console.log("updateProfileChangeButtonUI");
                 var val = document.getElementById('profile_picture').value;
                 if(val) {
-                    console.log('val not null:'+val);
-                    document.getElementById('profile-change').submit();
+                    console.log('val not null');
+                    document.getElementById('profile-change-button').disabled = true;
                 } else {
-                    console.log('val null:'+val);
-                    window.alert('프로필 사진을 선택해 주십시오.');
+                    console.log('val null');
+                    document.getElementById('profile-change-button').disabled = false;
                 }
             }
         </script>
