@@ -96,7 +96,9 @@
 
 		<!-- Fixed Floating Button -->
 		<div class="p-0 pb-sm-3 p-md-3 text-right" style="position: fixed;bottom: 1rem;right: 1rem;z-index: 1000;">
-			<a href="/post" class="btn btn-primary mb-3 rounded-pill shadow-hoverable">글쓰기</a>
+            <% if(login && (login.type == 0 || login.type == 2)) {%>
+                <a href="/post" class="btn btn-primary mb-3 rounded-pill shadow-hoverable">글쓰기</a>
+            <% } %>
 			<div class="d-flex">
 				<input class="form-control rounded-pill shadow-hoverable">
 				<button class="btn btn-dark ml-2 rounded-pill shadow-hoverable text-nowrap">검색</button>

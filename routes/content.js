@@ -22,6 +22,8 @@ router.get('/',function(req, res, next) {
                     resultJson.message = 'DB SELECT ERROR1';
                     callback(null, resultJson);
                 } else {
+                    var str = rows[0].match_create_date.toISOString().substr(0,10);
+                    rows[0].match_create_date = str;               
                     resultJson.matchData = rows[0];
                     callback(null, resultJson);
                 }
