@@ -17,7 +17,7 @@ var admin = require('./routes/admin');
 var editor = require('./routes/editor');
 var post = require('./routes/post');
 var content = require('./routes/content');
-
+var match = require('./routes/match');
 
 require('./lib/mysql_init');
 require('./lib/firebase_init');
@@ -50,6 +50,7 @@ app.use('/admin', admin);
 app.use('/editor', editor);
 app.use('/post', post);
 app.use('/content', content);
+app.use('/match', match);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
