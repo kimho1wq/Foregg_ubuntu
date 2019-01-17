@@ -131,20 +131,26 @@ router.get('/',function(req, res, next) {
             }
         },
         function (resultJson, callback) {
-            pool.query("SELECT * FROM match_contents_type", (err, rows) => {
-                if (err) {
-                    console.log(err);
-                    callback(null, resultJson);
-                } else {
-                    resultJson.tags = rows; 
-                    callback(null, resultJson);
-                }
-            });
+            if(resultJson.result) {
+                pool.query("SELECT * FROM match_contents_type", (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR6';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.tags = rows; 
+                        callback(null, resultJson);
+                    }
+                });
+            } else {
+                callback(null, resultJson);
+            }
         }
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags : resultJson.tags });
+            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags: resultJson.tags });
         } else {
             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/";</script>');
         }
