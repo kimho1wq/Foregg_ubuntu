@@ -27,10 +27,10 @@
 					<div class="col-sm-19">
 						<div class="radio-tile-group">
 							<% for (var i = 1; i <= tags.length; i++) { %>
-							<div class="input-container">
-								<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="post_type" value="<%=i%>" <% if (i == 1) { %> checked <% } %> >
-								<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i-1].type_name%></label>
-							</div>
+								<div class="input-container">
+									<input id="post_tag_<%=i%>" class="radio-button" type="radio" name="post_type" value="<%=i%>" <% if (i == 1) { %> checked <% } %> >
+									<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i-1].type_name%></label>
+								</div>
 							<% } %>
 						</div>
 					</div>

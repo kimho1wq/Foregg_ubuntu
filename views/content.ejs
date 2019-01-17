@@ -25,16 +25,16 @@
 				<h4><span class="text-primary">[<%=matchData.type_name%>]</span><%=matchData.match_title%></h4>
 				<div class="row m-0 text-muted small">
 					<p class="col-18 col-md p-0 m-0">
-                        <% if (matchData.user_picture) { %>
-                            <img src="<%=matchData.user_picture%>" class="h-2r rounded-pill w-auto"><%=matchData.user_nickname%>
-                        <% } else { %>
-                            <img src="img/basic_profile.png" class="h-2r rounded-pill w-auto"><%=matchData.user_nickname%>
-                        <% } %>
+						<% if (matchData.user_picture) { %>
+							<img src="<%=matchData.user_picture%>" class="h-2r rounded-pill w-auto"><%=matchData.user_nickname%>
+						<% } else { %>
+							<img src="img/basic_profile.png" class="h-2r rounded-pill w-auto"><%=matchData.user_nickname%>
+						<% } %>
 					</p>
 					<p class="col-6 p-0 m-0 text-right"><%=matchData.match_create_date%></p>
 				</div>
                 <% var videoIndex = 0; %>
-                <%if(matchData.match_video_count) {%>
+                <% if (matchData.match_video_count) { %>
                 <div>
                     <iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
                 </div>

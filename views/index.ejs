@@ -25,27 +25,26 @@
 			<h4 class="text-center">새로 올라온 매칭</h4>
 			<hr class="w-2r">
 			<div class="d-flex flex-wrap justify-content-center">
- 				<% for (var i = 0; i < matchData.length; i++) { %>
-				<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
-					<a href="/content?id=<%=matchData[i].match_id%>">
-						<div class="d-flex">
-							<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
-								<p class="text-dark font-weight-bold my-1"><%=matchData[i].match_title%></p>
-								<small class="text-muted">by <%=matchData[i].user_nickname%></small>
-								<div class="align-items-center d-flex mt-auto small text-muted">
-									<span class="border px-2 py-1 rounded-pill"><%=matchData[i].type_name%></span>
-									<span class="ml-auto"><%=matchData[i].match_create_date%></span>
+ 				<% for (var i = 0; i < 5; i++) { %>
+					<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
+						<a href="/content?id=<%=matchData[i].match_id%>" class="text-decoration-none">
+							<div class="d-flex">
+								<div class="my-card-content d-flex flex-column px-3 pt-4 pb-3">
+									<p class="text-dark font-weight-bold my-1"><%=matchData[i].match_title%></p>
+									<small class="text-muted">by <%=matchData[i].user_nickname%></small>
+									<div class="align-items-center d-flex mt-auto small text-muted">
+										<span class="border px-2 py-1 rounded-pill"><%=matchData[i].type_name%></span>
+										<span class="ml-auto"><%=matchData[i].match_create_date%></span>
+									</div>
 								</div>
+								<% if (matchData[i].user_picture) { %>
+									<img class="my-card-image" src="<%=matchData[i].user_picture%>">
+								<% } else { %>
+									<img class="my-card-image" src="img/basic_profile.png">
+								<% } %>
 							</div>
-                            <% if (matchData[i].user_picture) { %>
-                                <img class="my-card-image" src="<%=matchData[i].user_picture%>">
-                            <% } else { %>
-                                <img class="my-card-image" src="img/basic_profile.png">
-				            <% } %>
-							
-						</div>
-					</a>
-				</div>
+						</a>
+					</div>
 				<% } %>
 			</div>
 		</div>

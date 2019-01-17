@@ -19,7 +19,8 @@ router.get('/',function(req, res, next) {
                 maxLength: -1,
                 matchData: null,
                 info: null,
-                match_videoData: null
+                match_videoData: null,
+                tags: null
             };
             
             pool.query('SELECT * FROM match_contents WHERE match_flag = 1', (err, rows) => {
@@ -128,11 +129,22 @@ router.get('/',function(req, res, next) {
             } else {
                 callback(null, resultJson);
             }
-		}
+        },
+        function (resultJson, callback) {
+            pool.query("SELECT * FROM match_contents_type", (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    callback(null, resultJson);
+                } else {
+                    resultJson.tags = rows; 
+                    callback(null, resultJson);
+                }
+            });
+        }
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData });
+            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags : resultJson.tags });
         } else {
             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/";</script>');
         }
