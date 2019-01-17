@@ -25,15 +25,7 @@
 			<h4 class="text-center">새로 올라온 매칭</h4>
 			<hr class="w-2r">
 			<div class="d-flex flex-wrap justify-content-center">
-				<%
-				var num;
-				if (matchData.length < 5) {
-					num = matchData.length;
-				}
-				else {
-					num = 5;
-				}
-				for (var i = 0; i < num; i++) { %>
+				<% for (var i = 0; i < matchData.length; i++) { %>
 					<div class="my-card mx-0 mx-md-2 my-2 bg-light shadow-hoverable-sm">
 						<a href="/content?id=<%=matchData[i].match_id%>" class="text-decoration-none">
 							<div class="d-flex">
