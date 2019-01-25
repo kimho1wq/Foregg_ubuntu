@@ -1,5 +1,5 @@
 <script src="js/jquery-3.3.1.min.js"></script>
-<nav id="header" class="navbar navbar-light navbar-expand-lg sticky-top align-items-stretch p-0">
+<nav id="header" class="navbar navbar-light navbar-expand-lg sticky-top align-items-stretch p-0 bg-light">
 	<div class="d-flex px-3 py-2">
 		<a href="/" class="navbar-brand"><% include logo.ejs %></a>
 		<ul class="navbar-nav flex-row mr-auto">
@@ -19,14 +19,14 @@
 						<a href="/users/info"><img src="img/basic_profile.png" class="h-2r rounded-pill w-auto"></a>
 					<% } %>
 				</div>
-				<a href="/users/logout" class="btn btn-outline-light my-2 my-sm-0">로그아웃</a>
+				<a href="/users/logout" class="btn my-2 my-sm-0">로그아웃</a>
 			<% } else { %>
-				<a href="/users/login" class="btn btn-outline-light my-2 my-sm-0">로그인</a>
+				<a href="/users/login" class="btn my-2 my-sm-0">로그인</a>
 			<% } %>
 		</div>
 	</div>
 	<!-- 영상 -->
-	<div class="d-flex p-2 border-top">
+	<div class="d-flex align-items-center p-2 border-top border-bottom">
 		<a href="#" class="px-2 text-decoration-none text-muted">웨딩 촬영</a>
 		<a href="#" class="px-2 text-decoration-none text-muted">투어 촬영</a>
 		<a href="#" class="px-2 text-decoration-none text-muted">개인프로필 촬영</a>

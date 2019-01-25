@@ -1,8 +1,0 @@
-nav
-{
-	transition: background-color 0.4s;
-}
-nav:not(.scrolled)
-{
-	background-color: rgba(0,0,0,0) !important;
-}
