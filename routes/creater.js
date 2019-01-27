@@ -2,8 +2,15 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
-router.get('/',function(req, res, next) {
-    console.log('/editor get pass request.');
+// /creater
+router.get('/', function (req, res, next) {
+    console.log('/creater get pass request.');
+    res.render('creater/index', { login : req.session.user, subnav : "creater" } );
+});
+
+// /creater/editor
+router.get('/editor',function(req, res, next) {
+    console.log('/creater/editor get pass request.');
     
     var page = req.query.page;
     if(!page) page = 1;
@@ -150,7 +157,7 @@ router.get('/',function(req, res, next) {
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-            res.render('editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags: resultJson.tags });
+            res.render('creater/editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags: resultJson.tags, subnav : "creater" });
         } else {
             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/";</script>');
         }

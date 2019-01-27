@@ -14,7 +14,7 @@ var mysql = require('mysql');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
-var editor = require('./routes/editor');
+var creater = require('./routes/creater');
 var post = require('./routes/post');
 var content = require('./routes/content');
 var match = require('./routes/match');
@@ -45,14 +45,15 @@ app.use(session({
     saveUninitialized: true
 }));
 
+/* route */
 app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
-app.use('/editor', editor);
+app.use('/record', record);   // record
+app.use('/creater', creater); // creater
 app.use('/post', post);
 app.use('/content', content);
 app.use('/match', match);
-app.use('/record', record);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,10 +4,10 @@
 		<a href="/" class="navbar-brand my-auto"><% include logo.ejs %></a>
 		<ul class="navbar-nav flex-row mr-auto">
 			<li class="nav-item border-right">
-				<a href="/record" class="nav-link px-2">영상</a>
+				<a href="/record" class="nav-link px-2">일반</a>
 			</li>
 			<li class="nav-item">
-				<a href="#" class="nav-link px-2">장비/장소</a>
+				<a href="/creater" class="nav-link px-2">크리에이터</a>
 			</li>
 		</ul>
 		<div class="d-flex">
@@ -28,13 +28,15 @@
 	<% if (typeof subnav != 'undefined') { %>
 		<div class="d-flex align-items-center p-2 border-top small">
 		<% if (subnav == "record") { %>
-			<!-- 영상 -->
+			<!-- 일반 -->
 			<a href="#" class="px-2 text-decoration-none text-muted">웨딩</a>
 			<a href="#" class="px-2 text-decoration-none text-muted">투어</a>
-			<a href="#" class="px-2 text-decoration-none text-muted">개인프로필</a>
-			<a href="/editor?page=1" class="px-2 text-decoration-none text-muted">전문가 매칭</a>
-		<% } else if (subnav == "rent") { %>
-			<!-- 장비/장소 -->
+			<a href="#" class="px-2 text-decoration-none text-muted">프로필</a>
+			<a href="#" class="px-2 text-decoration-none text-muted">개인영상</a>
+		<% } else if (subnav == "creater") { %>
+			<!-- 크리에이터 -->
+			<a href="/creater/editor?page=1" class="px-2 text-decoration-none text-muted">편집자 매칭</a>
+			<a href="#" class="px-2 text-decoration-none text-muted">장비/장소</a>
 		<% } %>
 		</div>
 	<% } %>
