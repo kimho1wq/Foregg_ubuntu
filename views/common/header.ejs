@@ -1,6 +1,6 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <nav id="header" class="navbar navbar-light navbar-expand-lg sticky-top flex-column align-items-stretch p-0 bg-light border-bottom">
-	<div class="d-flex px-3 py-2">
+	<div class="container px-3 py-2">
 		<a href="/" class="navbar-brand my-auto"><% include logo.ejs %></a>
 		<ul class="navbar-nav flex-row mr-auto">
 			<li class="nav-item border-right">
@@ -26,18 +26,20 @@
 		</div>
 	</div>
 	<% if (typeof subnav != 'undefined') { %>
-		<div class="d-flex align-items-center p-2 border-top small">
-		<% if (subnav == "record") { %>
-			<!-- 일반 -->
-			<a href="#" class="px-2 text-decoration-none text-muted">웨딩</a>
-			<a href="#" class="px-2 text-decoration-none text-muted">투어</a>
-			<a href="#" class="px-2 text-decoration-none text-muted">프로필</a>
-			<a href="#" class="px-2 text-decoration-none text-muted">개인영상</a>
-		<% } else if (subnav == "creater") { %>
-			<!-- 크리에이터 -->
-			<a href="/creater/editor?page=1" class="px-2 text-decoration-none text-muted">편집자 매칭</a>
-			<a href="#" class="px-2 text-decoration-none text-muted">장비/장소</a>
-		<% } %>
+		<div class="border-top">
+			<div class="container py-2 small">
+			<% if (subnav == "record") { %>
+				<!-- 일반 -->
+				<a href="#" class="px-2 text-decoration-none text-muted">웨딩</a>
+				<a href="#" class="px-2 text-decoration-none text-muted">투어</a>
+				<a href="#" class="px-2 text-decoration-none text-muted">프로필</a>
+				<a href="#" class="px-2 text-decoration-none text-muted">개인영상</a>
+			<% } else if (subnav == "creater") { %>
+				<!-- 크리에이터 -->
+				<a href="/creater/editor?page=1" class="px-2 text-decoration-none text-muted">편집자 매칭</a>
+				<a href="#" class="px-2 text-decoration-none text-muted">장비/장소</a>
+			<% } %>
+			</div>
 		</div>
 	<% } %>
 </nav>
