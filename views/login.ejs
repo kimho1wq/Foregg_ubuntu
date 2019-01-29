@@ -12,7 +12,7 @@
 	</head>
 	<body class="d-flex vh-100 bg-light">
 		<div class="p-3 m-auto text-center" style="width: 20rem;">
-			<img class="mb-5" src="../img/cs256.png" alt="" width="96" height="96">
+			<a href="/"><img class="mb-5" src="../img/cs256.png" alt="" width="96" height="96"></a>
 			<form action="/users/login" method="post" autocomplete="on">
 				<div class="form-group mb-2">
 					<input type="text" class="form-control" name="signInEmail" placeholder="이메일" autofocus required>
@@ -23,51 +23,47 @@
 				<!--div class="checkbox mb-4 text-left text-muted small">
 					<input type="checkbox" value="remember-me"> 아이디 저장
 				</div-->
-				<button type="submit" class="btn btn-primary btn-block mt-4">로그인</button>
+				<button type="submit" class="btn btn-primary btn-block mt-4">이메일 로그인</button>
 			</form>
-			<div class="mt-3 text-center small">
-				<a class="mx-2 text-muted" href="#">이메일 찾기</a>
-				|
-				<a class="mx-2 text-muted" href="#">비밀번호 찾기</a>
-				|
-				<a class="mx-2 text-muted" href="/users/join">회원가입</a>
-				<br>
-				<hr>
+			<p class="my-3 small text-muted">또는</p>
 				<!-- <form action="/users/login_fb" method="post" autocomplete="on">
 					<button type="submit" class="btn btn-primary btn-block mt-4">Facebook 로그인</button>
 				</form> -->
-				<div class="fb-login-button" data-width="1" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+			<div class="fb-login-button" data-width="1" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+			<div class="mt-6 text-center small">
+				<a class="p-1 text-muted" href="#">이메일 찾기</a>
+				<span class="p-1">|</span>
+				<a class="p-1 text-muted" href="#">비밀번호 찾기</a>
+				<span class="p-1">|</span>
+				<a class="p-1 text-muted" href="/users/join">회원가입</a>
 			</div>
 		</div>
 
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '1964383303868406',
-                    cookie     : true,
-                    xfbml      : true,
-                    version    : 'v3.2'
-                });
-      
-                FB.AppEvents.logPageView();   
-      
-            };
-            
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1964383303868406&autoLogAppEvents=1';
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-            
-            function checkLoginState() {
-                FB.getLoginStatus(function(response) {
-                    statusChangeCallback(response);
-                });
-            }
-            
-        </script>
+		<script>
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId   : '1964383303868406',
+					cookie  : true,
+					xfbml   : true,
+					version : 'v3.2'
+				});
+				FB.AppEvents.logPageView();
+			};
+			
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1964383303868406&autoLogAppEvents=1';
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+			
+			function checkLoginState() {
+				FB.getLoginStatus(function(response) {
+					statusChangeCallback(response);
+				});
+			}
+		</script>
 
 		<!-- Bootstrap core JavaScript
 		================================================== -->
