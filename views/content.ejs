@@ -12,16 +12,18 @@
 	</head>
 	<body>
 		<% include common/header.ejs %>
-		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
-			<div class="text-white">
-				<h2 class="display-4 font-weight-normal">전문가 매칭</h2>
-				<p class="lead font-weight-normal">The easiest way to create your own video.<br>This is the time to ForEgg.</p>
-			</div>
-		</div>
 		<div class="container py-5">
-			<a href="/editor" class="btn btn-sm btn-outline-secondary mb-3">‹ 돌아가기</a>
+			<div class="d-flex mb-3">
+				<a href="/creater" class="btn btn-sm btn-outline-secondary">‹ 돌아가기</a>
+				<% if (login && login.type == 0) { %>
+					<form action="/content" method="post" class="ml-auto">
+						<input type="hidden" name="id" value="<%=matchData.match_id%>">
+						<button class="btn btn-sm btn-outline-danger">삭제하기</button>
+					</form>
+				<% } %>
+			</div>
 			<div>
-				<h4><span class="text-primary">[<%=matchData.type_name%>]</span><%=matchData.match_title%></h4>
+				<h5><span class="text-primary">[<%=matchData.type_name%>]</span><%=matchData.match_title%></h5>
 				<div class="row m-0 text-muted small">
 					<p class="col-18 col-md p-0 m-0">
 						<% if (matchData.user_picture) { %>
@@ -32,14 +34,16 @@
 					</p>
 					<p class="col-6 p-0 m-0 text-right"><%=matchData.match_create_date%></p>
 				</div>
-                <% var videoIndex = 0; %>
-                <% if (matchData.match_video_count) { %>
-                <div>
-                    <iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
-                </div>
-                <%}%>
+				<hr>
+				<% var videoIndex = 0; %>
+				<% if (matchData.match_video_count) { %>
+					<div class="py-4">
+						<div class="position-relative w-100" style="padding-bottom: 56.25%;">
+							<iframe class="h-100 position-absolute w-100" src="<%=match_videoData[videoIndex++].match_video_link%>" width="640" height="360" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+						</div>
+					</div>
+				<% } %>
 			</div>
-			<hr>
 			<p>
 				<%var lines = matchData.match_content.split("\n");%>
 				<%lines.forEach(function(item) {%>
@@ -48,20 +52,8 @@
 			</p>
 			<hr>
 			<div>
-				<a href="/editor" class="btn btn-sm btn-outline-secondary">‹ 돌아가기</a>
-                <a href="/match" class="btn btn-sm btn-outline-primary">매칭신청</a>
+				<a href="/match" class="btn btn-sm btn-outline-primary">매칭신청</a>
 			</div>
-            <%if(login && login.type == 0) {%>
-            <div>             
-                <form action="/content" method="post">
-                    <input type="hidden" name="id" value="<%=matchData.match_id%>">
-                    <button class="btn btn-sm btn-outline-primary">삭제하기</button>
-                </form>
-            </div>
-            <%}%>
-            
-            
-			<!-- TODO: Buttons here -->
 		</div>
 
 		<% include common/footer.ejs %>
