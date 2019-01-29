@@ -36,3 +36,10 @@
 	height: 216px;
 	object-fit: cover;
 }
+
+.carousel-item
+{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}

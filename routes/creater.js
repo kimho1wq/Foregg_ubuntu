@@ -5,7 +5,96 @@ var async = require('async');
 // /creater
 router.get('/', function (req, res, next) {
     console.log('/creater get pass request.');
-    res.render('creater/index', { login : req.session.user, subnav : "creater" } );
+
+    async.waterfall([
+		function (callback) {
+            
+            var resultJson = {
+                result: true,
+                message: '',
+                matchCompleted: -1,
+                editorMatching: -1,
+                maxLength: -1,
+                matchData: null
+            };
+            
+            pool.query('SELECT * FROM match_contents WHERE match_flag = 1', (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    resultJson.result = false;
+                    resultJson.message = 'DB SELECT ERROR1';
+                    callback(null, resultJson);
+                } else {
+                    resultJson.matchCompleted = rows.length;
+                    callback(null, resultJson);
+                }
+            });
+		},
+        function (resultJson, callback) {
+            if(resultJson.result) {
+                pool.query('SELECT * FROM match_contents WHERE match_flag = 0', (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR2';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.editorMatching = rows.length;
+                        callback(null, resultJson);
+                    }
+                });
+            } else {
+                callback(null, resultJson);
+            }
+		},
+        function (resultJson, callback) {
+            if(resultJson.result) {
+                pool.query('SELECT * FROM match_contents', (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR3';
+                        callback(null, resultJson);
+                    } else {
+                        resultJson.maxLength = rows.length;
+                        callback(null, resultJson);
+                    }
+                });
+            } else {
+                callback(null, resultJson);
+            }
+		},
+        function (resultJson, callback) {
+            if(resultJson.result) {
+                pool.query('SELECT * FROM users u, match_contents mc, match_contents_type mct WHERE mc.match_writer = u.user_uid AND mc.match_type = mct.type ORDER BY match_create_date DESC LIMIT 0, 5', (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                        resultJson.result = false;
+                        resultJson.message = 'DB SELECT ERROR4';
+                        callback(null, resultJson);
+                    } else {
+                        for(var i = 0; i < rows.length; i++) {
+                            //Tue Jan 01 2019 08:29:42 GMT+0000
+                            //2019-01-01 08:29:20
+                            var str = rows[i].match_create_date.toISOString().substr(0,10);
+                            rows[i].match_create_date = str;
+                        }
+                        resultJson.matchData = rows;
+                        callback(null, resultJson);
+                    }
+                });
+            } else {
+                callback(null, resultJson);
+            }
+		}
+	],
+    function (callback, resultJson) {
+        if(resultJson.result) {
+            res.render('creater/index', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, subnav : "creater" });
+        } else {
+            res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "error";</script>');
+        }
+    });
 });
 
 // /creater/editor
