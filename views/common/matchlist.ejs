@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>ForEgg</title>
+
+		<!-- CSS -->
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/product.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include header.ejs %>
+
+		<div class="headline d-flex flex-column justify-content-center px-3 px-sm-4 px-md-5 px-lg-6 pt-5">
+			<div class="text-white">
+				<h2 class="display-4 font-weight-normal">
+					<% if (typeof headlineTitle != 'undefined') { %>
+						<%= headlineTitle %>
+					<% } %>
+					매칭
+				</h2>
+				<p class="lead font-weight-normal">
+					지금까지 <%=matchCompleted%>회의 매칭이 성사되었으며,<br>
+					<%=editorMatching%>명의 전문가가 매칭을 기다리고 있습니다.
+				</p>
+			</div>
+		</div>
+
+		<div class="container py-5">
+			<div class="mb-3">
+			<h6>세부 분류</h6>
+				<div class="radio-tile-group">
+					<% for (var i = 1; i <= tags.length; i++) { %>
+					<div class="input-container">
+						<input id="post_tag_<%=i%>" class="radio-button" type="checkbox" name="post_type" value="<%=i%>">
+						<label for="post_tag_<%=i%>" class="m-0 radio-tile radio-tile-label"><%=tags[i-1].type_name%></label>
+					</div>
+					<% } %>
+				</div>
+				<div class="d-flex">
+					<div class="d-inline-flex ml-auto">
+						<input class="form-control form-control-sm rounded-pill">
+						<button class="btn btn-dark btn-sm ml-2 rounded-pill text-nowrap">검색</button>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<!-- TODO: List here -->
+				<div class="list-group list-group-flush border-top">
+				<%var videoIndex = 0;%>
+				<% for (var i = 0; i < matchData.length; i++) { %>
+					<a class="list-group-item list-group-item-action d-flex" href="/content?id=<%=matchData[i].match_id%>">               
+						<div class="col-18 p-0">
+							<h6 class="m-0"><span class="badge badge-primary mr-1"><%=matchData[i].type_name%></span><%=matchData[i].match_title%></h6>
+							<small class="text-muted"><%=matchData[i].user_nickname%></small>
+							<%if(matchData[i].match_video_count) {%>
+								<div>
+									<iframe src="<%=match_videoData[videoIndex++].match_video_link%>" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+								</div>
+							<%}%>
+						</div>
+						<div class="col-6 p-0 text-right">
+							<small class="text-muted"><%=matchData[i].match_create_date%> </small>
+						</div>
+						<% if (matchData[i].user_picture) { %>
+							<img src="<%=matchData[i].user_picture%>" class="h-2r rounded-pill w-auto">
+						<% } else { %>
+							<img src="img/basic_profile.png" class="h-2r rounded-pill w-auto">
+						<% } %>
+					</a>
+				<% } %>
+				</div>
+				<nav class="my-3" aria-label="Search results pages">
+					<ul class="pagination justify-content-center">
+					<% if (info.startPage==1) {%>
+						<li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+					<% } else { %>
+						<li class="page-item">
+							<a class="page-link" href="/editor?page=<%=(info.startPage - info.limitPage)%>">&laquo;</a>
+						</li>
+					<% } %>
+					<% for (var i = info.startPage; i <= info.endPage; i++) {%>
+						<% if (i == info.active) { %>
+							<li class="page-item active">
+								<a class="page-link" href="/editor?page=<%=i%>"><%=i%></a>
+							</li>
+						<% } else { %>
+							<li class="page-item">
+								<a class="page-link" href="/editor?page=<%=i%>"><%=i%></a>
+							</li>
+						<% } %>
+					<% } %>
+					<% if (info.endPage == info.pagination) { %>
+						<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+					<% } else { %>
+						<li class="page-item">
+							<a class="page-link" href="/editor?page=<%=(info.startPage - (-info.limitPage))%>">&raquo;</a>
+						</li>
+					<% } %>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+		<!-- Fixed Floating Button -->
+		<div class="p-0 pb-sm-3 p-md-3 text-right" style="position: fixed;bottom: 1rem;right: 1rem;z-index: 1000;">
+			<% if(login && (login.type == 0 || login.type == 2)) {%>
+				<a href="/post" class="btn btn-primary rounded-pill shadow-hoverable">글쓰기</a>
+			<% } %>
+			<!--div class="d-flex">
+				<input class="form-control rounded-pill shadow-hoverable">
+				<button class="btn btn-dark ml-2 rounded-pill shadow-hoverable text-nowrap">검색</button>
+			</div-->
+		</div>
+
+		<% include footer.ejs %>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="/js/bootstrap.bundle.min.js"></script>
+		<script src="/js/common.js"></script>
+	</body>
+</html>

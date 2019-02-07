@@ -37,7 +37,7 @@
 				<hr>
 				<% var videoIndex = 0; %>
 				<% if (matchData.match_video_count) { %>
-					<div class="py-4">
+					<div class="p-4">
 						<div class="position-relative w-100" style="padding-bottom: 56.25%;">
 							<iframe class="h-100 position-absolute w-100" src="<%=match_videoData[videoIndex++].match_video_link%>" width="640" height="360" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
 						</div>
@@ -50,9 +50,8 @@
 					<%=item%><br/>
 				<%})%>
 			</p>
-			<hr>
-			<div>
-				<a href="/match" class="btn btn-sm btn-outline-primary">매칭신청</a>
+			<div class="text-center py-5">
+				<a href="/match" class="btn btn-lg btn-primary">매칭신청</a>
 			</div>
 		</div>
 

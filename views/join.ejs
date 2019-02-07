@@ -15,50 +15,49 @@
 			<img class="mb-5" src="../img/cs256.png" alt="" width="96" height="96">
 			<h3 class="mb-3 font-weight-normal">회원가입</h3>
 			
-            <form action="/users/join" method="post">
+		<form action="/users/join" method="post">
 				<hr class="my-4">
 				<!--<div class="form-group">
-                    <p>프로필 사진 선택</p>
-                    <input type="file" class="form-control-file" id="join_picture" name="join_picture">
-                </div>-->
-                    
-                <div class="form-group">
-                    <label for="join_email">이메일</label>
-                    <input type="text" class="form-control" name="join_email" id="join_email" placeholder="you@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="join_password">비밀번호</label>
-                    <input type="password" class="form-control" name="join_password" id="join_password" required>
-                </div>
-                <div class="form-group">
-                    <label for="join_password2">비밀번호 확인</label>
-                    <input type="password" class="form-control" name="join_password2" id="join_password2" required>
-                </div>
-                <div class="form-group">
-                    <label for="join_nickname">닉네임</label>
-                    <input type="text" class="form-control" name="join_nickname" id="join_nickname" maxlength="18" required>
-                </div>
-                <div class="form-group">
-                    <label for="join_phone">휴대폰 번호</label>
-                    <input type="tel" class="form-control" name="join_phone" id="join_phone" maxlength="11" required>
-                </div>
-                <div class="form-group">
-                    <label>회원유형</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="join_type2" value="1">
-                        <label class="form-check-label" for="join_type2">크리에이터</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="join_type1" value="2" checked>
-                        <label class="form-check-label" for="join_type1">영상편집자</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="join_type3" value="3">
-                        <label class="form-check-label" for="join_type3">기타</label>
-                    </div>
-                </div>
-                <hr class="my-4">
-                <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+					<p>프로필 사진 선택</p>
+					<input type="file" class="form-control-file" id="join_picture" name="join_picture">
+				</div>-->
+				<div class="form-group">
+					<label for="join_email">이메일</label>
+					<input type="email" class="form-control" name="join_email" id="join_email" placeholder="you@example.com" required>
+				</div>
+				<div class="form-group">
+					<label for="join_password">비밀번호</label>
+					<input type="password" class="form-control" name="join_password" id="join_password" required>
+				</div>
+				<div class="form-group">
+					<label for="join_password2">비밀번호 확인</label>
+					<input type="password" class="form-control" name="join_password2" id="join_password2" required>
+				</div>
+				<div class="form-group">
+					<label for="join_nickname">닉네임</label>
+					<input type="text" class="form-control" name="join_nickname" id="join_nickname" maxlength="18" required>
+				</div>
+				<div class="form-group">
+					<label for="join_phone">휴대폰 번호</label>
+					<input type="tel" class="form-control" name="join_phone" id="join_phone" maxlength="11" required>
+				</div>
+				<div class="form-group">
+					<label>회원유형</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="type" id="join_type2" value="1">
+						<label class="form-check-label" for="join_type2">크리에이터</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="type" id="join_type1" value="2" checked>
+						<label class="form-check-label" for="join_type1">영상편집자</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="type" id="join_type3" value="3">
+						<label class="form-check-label" for="join_type3">기타</label>
+					</div>
+				</div>
+				<hr class="my-4">
+				<button type="submit" class="btn btn-primary btn-block">회원가입</button>
 			</form>
 			<div class="mt-3 text-center small">
 				<a class="mx-2 text-muted" href="/users/login">로그인 하기</a>

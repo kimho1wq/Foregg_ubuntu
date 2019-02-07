@@ -1,11 +1,12 @@
 <script src="/js/jquery-3.3.1.min.js"></script>
 <nav id="header" class="navbar navbar-light navbar-expand-lg sticky-top flex-column align-items-stretch p-0 bg-white border-bottom shadow-sm">
-	<div class="container px-3 py-2">
+	<div class="container px-3 py-2 font-weight-bold">
 		<a href="/" class="navbar-brand my-auto"><% include logo.ejs %></a>
 		<ul class="navbar-nav flex-row mr-auto">
-			<li class="nav-item border-right">
+			<li class="nav-item">
 				<a href="/record" class="nav-link px-2">일반</a>
 			</li>
+			<li class="border m-2 nav-item"></li>
 			<li class="nav-item">
 				<a href="/creater" class="nav-link px-2">크리에이터</a>
 			</li>
@@ -27,7 +28,7 @@
 	</div>
 	<% if (typeof subnav != 'undefined') { %>
 		<div class="border-top">
-			<div class="container py-2 small">
+			<div class="container py-2 small font-weight-bold">
 			<% if (subnav == "record") { %>
 				<!-- 일반 -->
 				<a href="#" class="px-2 text-decoration-none text-muted">웨딩</a>

@@ -246,7 +246,7 @@ router.get('/editor',function(req, res, next) {
 	],
     function (callback, resultJson) {
         if(resultJson.result) {
-            res.render('creater/editor', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags: resultJson.tags, subnav : "creater" });
+            res.render('common/matchlist', { login : req.session.user, matchData: resultJson.matchData, matchCompleted: resultJson.matchCompleted, editorMatching: resultJson.editorMatching, info: resultJson.info, match_videoData: resultJson.match_videoData, tags: resultJson.tags, subnav : "creater", headlineTitle : "전문편집자" });
         } else {
             res.send('<script type="text/javascript">alert("'+ resultJson.message +'");window.location.href = "/";</script>');
         }
